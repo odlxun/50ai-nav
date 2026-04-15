@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>50AI导航 - 全网专业AI工具导航 | 一站式AI工具箱</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Noto Sans SC', 'system-ui', 'sans-serif'],
+      },
+      colors: { 
+        primary: '#5967f3',
+        secondary: '#ff6b6b',
+        accent: '#4ecdc4',
+        dark: {
+          100: '#1a1a1c',
+          200: '#242427',
+          300: '#27272a'
+        }
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-out',
+        'slide-up': 'slideUp 0.4s ease-out',
+        'pulse-soft': 'pulseSoft 2s infinite',
+        'float': 'float 3s ease-in-out infinite',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        pulseSoft: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.7' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-5px)' },
+        },
+      },
+    }
+  }
+}
+</script>
+<style>
+/* 自定义样式 */
+body {
+  font-family: 'Noto Sans SC', system-ui, sans-serif;
+}
+
+/* 渐变背景 */
+.gradient-bg {
+  background: linear-gradient(135deg, #f7f8fa 0%, #e8ecf4 50%, #f0f4f8 100%);
+}
+
+.dark .gradient-bg {
+  background: linear-gradient(135deg, #0f0f11 0%, #1a1a2e 50%, #0f0f11 100%);
+}
+
+/* 玻璃态效果 */
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass-card {
+  background: rgba(26, 26, 28, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 工具卡片hover效果 */
+.tool-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tool-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -8px rgba(89, 103, 243, 0.15);
+}
+
+.dark .tool-card:hover {
+  box-shadow: 0 12px 24px -8px rgba(89, 103, 243, 0.25);
+}
+
+/* 侧边栏项目hover效果 */
+.sidebar-item {
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: visible;
+}
+
+.sidebar-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0;
+  background: linear-gradient(180deg, #5967f3, #4ecdc4);
+  border-radius: 2px;
+  transition: height 0.2s ease;
+  z-index: 1;
+}
+
+.sidebar-item:hover::before,
+.sidebar-item.active::before {
+  height: 60%;
+}
+
+.sidebar-item.active {
+  background: linear-gradient(90deg, rgba(89, 103, 243, 0.1), transparent);
+}
+
+/* Logo动画 */
+.logo-container {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* 搜索框聚焦效果 */
+.search-input:focus {
+  box-shadow: 0 0 0 3px rgba(89, 103, 243, 0.2);
+}
+
+/* 分类标签渐变 */
+.category-tag {
+  background: linear-gradient(135deg, #5967f3, #4ecdc4);
+}
+
+/* 页面加载动画 */
+@keyframes pageLoad {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.page-load {
+  animation: pageLoad 0.6s ease-out forwards;
+}
+
+/* 卡片网格动画 */
+@keyframes slideUp {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+.tool-grid > * {
+  opacity: 1;
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(89, 103, 243, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(89, 103, 243, 0.5);
+}
+
+/* 移动端底部导航栏美化 */
+.mobile-nav-item {
+  transition: all 0.2s ease;
+}
+
+.mobile-nav-item.active {
+  color: #5967f3;
+}
+
+.mobile-nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 2px;
+  background: linear-gradient(90deg, #5967f3, #4ecdc4);
+  border-radius: 1px;
+}
+</style>
+</head>
+<body class="gradient-bg text-[#1d1d1f] dark:text-white min-h-screen">
+
+<div class="flex min-h-screen">
+<!-- 侧边栏：专业导航 + 专属LOGO + 广告合作入口 -->
+<aside id="sidebar" class="w-[220px] fixed h-full bg-white/80 dark:bg-dark-100/80 backdrop-blur-xl border-r border-gray-200/50 dark:border-dark-300/50 z-50 transition-transform duration-300 transform md:translate-x-0 -translate-x-full md:relative relative">
+  <div class="p-5 border-b border-gray-200/50 dark:border-dark-300/50">
+    <!-- 你的专属定制LOGO -->
+    <div class="flex flex-col items-center text-center">
+      <div class="logo-container flex items-center gap-3 mb-2">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-primary/20">50</div>
+        <h1 class="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">50AI导航</h1>
+      </div>
+      <p class="text-xs text-gray-500 dark:text-gray-400">专业AI工具导航 · 高效便捷</p>
+    </div>
+  </div>
+
+  <div class="p-3 space-y-1 overflow-y-visible h-[calc(100vh-120px)]">
+    <a onclick="filter('all','')" class="sidebar-item active flex items-center gap-2 px-3 py-3 rounded-xl bg-primary/10 text-primary font-medium text-sm cursor-pointer transition-all">
+      <i class="fa-solid fa-th-large w-4"></i> 全部工具
+    </a>
+    <a onclick="filter('write','')" class="sidebar-item flex items-center gap-2 px-3 py-3 rounded-xl hover:bg-gray-100/80 dark:hover:bg-dark-200/80 text-sm cursor-pointer transition-all">
+      <i class="fa-solid fa-pen w-4 text-primary/70"></i> AI 写作
+    </a>
+    <a onclick="filter('img','')" class="sidebar-item flex items-center gap-2 px-3 py-3 rounded-xl hover:bg-gray-100/80 dark:hover:bg-dark-200/80 text-sm cursor-pointer transition-all">
+      <i class="fa-solid fa-image w-4 text-accent/70"></i> AI 绘画
+    </a>
+    <a onclick="filter('video','')" class="sidebar-item flex items-center gap-2 px-3 py-3 rounded-xl hover:bg-gray-100/80 dark:hover:bg-dark-200/80 text-sm cursor-pointer transition-all">
+      <i class="fa-solid fa-video w-4 text-secondary/70"></i> AI 视频
+    </a>
+    <a onclick="filter('audio','')" class="sidebar-item flex items-center gap-2 px-3 py-3 rounded-xl hover:bg-gray-100/80 dark:hover:bg-dark-200/80 text-sm cursor-pointer transition-all">
+      <i class="fa-solid fa-volume-high w-4 text-purple-500/70"></i> AI 音频
+    </a>
+    <a onclick="filter('code','')" class="sidebar-item flex items-center gap-2 px-3 py-3 rounded-xl hover:bg-gray-100/80 dark:hover:bg-dark-200/80 text-sm cursor-pointer transition-all">
+      <i class="fa-solid fa-code w-4 text-green-500/70"></i> AI 编程
+    </a>
+    <a onclick="filter('design','')" class="sidebar-item flex items-center gap-2 px-3 py-3 rounded-xl hover:bg-gray-100/80 dark:hover:bg-dark-200/80 text-sm cursor-pointer transition-all">
+      <i class="fa-solid fa-wand-magic-sparkles w-4 text-pink-500/70"></i> AI 设计
+    </a>
+    <a onclick="filter('search','')" class="sidebar-item flex items-center gap-2 px-3 py-3 rounded-xl hover:bg-gray-100/80 dark:hover:bg-dark-200/80 text-sm cursor-pointer transition-all">
+      <i class="fa-solid fa-magnifying-glass w-4 text-cyan-500/70"></i> AI 搜索
+    </a>
+    <a onclick="filter('novel','')" class="sidebar-item flex items-center gap-2 px-3 py-3 rounded-xl hover:bg-gray-100/80 dark:hover:bg-dark-200/80 text-sm cursor-pointer transition-all">
+      <i class="fa-solid fa-book w-4 text-amber-500/70"></i> AI 小说
+    </a>
+    <a onclick="filter('digital','')" class="sidebar-item flex items-center gap-2 px-3 py-3 rounded-xl hover:bg-gray-100/80 dark:hover:bg-dark-200/80 text-sm cursor-pointer transition-all">
+      <i class="fa-solid fa-user w-4 text-teal-500/70"></i> AI 数字人
+    </a>
+    <a onclick="filter('ppt','')" class="sidebar-item flex items-center gap-2 px-3 py-3 rounded-xl hover:bg-gray-100/80 dark:hover:bg-dark-200/80 text-sm cursor-pointer transition-all">
+      <i class="fa-solid fa-file-powerpoint w-4 text-orange-500/70"></i> AI PPT
+    </a>
+    <a onclick="filter('agent','')" class="sidebar-item flex items-center gap-2 px-3 py-3 rounded-xl hover:bg-gray-100/80 dark:hover:bg-dark-200/80 text-sm cursor-pointer transition-all">
+      <i class="fa-solid fa-gears w-4 text-indigo-500/70"></i> AI Agent
+    </a>
+
+    <a onclick="filter('prompt','')" class="sidebar-item flex items-center gap-2 px-3 py-3 rounded-xl hover:bg-gray-100/80 dark:hover:bg-dark-200/80 text-sm cursor-pointer transition-all">
+      <i class="fa-solid fa-file-lines w-4 text-slate-500/70"></i> AI提示指令
+    </a>
+    <a onclick="filter('comic','')" class="sidebar-item flex items-center gap-2 px-3 py-3 rounded-xl hover:bg-gray-100/80 dark:hover:bg-dark-200/80 text-sm cursor-pointer transition-all">
+      <i class="fa-solid fa-image w-4 text-rose-500/70"></i> AI漫剧
+    </a>
+    <a onclick="filter('office','')" class="sidebar-item flex items-center gap-2 px-3 py-3 rounded-xl hover:bg-gray-100/80 dark:hover:bg-dark-200/80 text-sm cursor-pointer transition-all">
+      <i class="fa-solid fa-briefcase w-4 text-emerald-500/70"></i> AI办公工具
+    </a>
+    
+    <div class="my-3 border-t border-gray-200/50 dark:border-dark-300/50"></div>
+    
+    <a onclick="filter('','hot')" class="sidebar-item flex items-center gap-2 px-3 py-3 rounded-xl hover:bg-red-50/80 dark:hover:bg-red-900/20 text-sm cursor-pointer transition-all">
+      <i class="fa-solid fa-fire w-4 text-red-500"></i> 热门工具
+    </a>
+    <a onclick="filter('','cn')" class="sidebar-item flex items-center gap-2 px-3 py-3 rounded-xl hover:bg-green-50/80 dark:hover:bg-green-900/20 text-sm cursor-pointer transition-all">
+      <i class="fa-solid fa-circle-check w-4 text-green-500"></i> 国内可用
+    </a>
+    <a onclick="showFav()" class="sidebar-item flex items-center gap-2 px-3 py-3 rounded-xl hover:bg-yellow-50/80 dark:hover:bg-yellow-900/20 text-sm cursor-pointer transition-all">
+      <i class="fa-solid fa-star w-4 text-yellow-500"></i> 我的收藏
+    </a>
+    <a onclick="openSubmit()" class="flex items-center gap-2 px-3 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-200 text-sm cursor-pointer transition-all hover:shadow-sm">
+      <i class="fa-solid fa-circle-plus w-4 text-blue-500"></i> 提交工具
+    </a>
+    <!-- 广告合作入口（商业变现） -->
+    <a href="https://mp.weixin.qq.com/你的公众号" target="_blank" class="flex items-center gap-2 px-3 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-200 text-sm text-purple-500 cursor-pointer transition-all hover:shadow-sm">
+      <i class="fa-solid fa-handshake w-4"></i> 广告合作
+    </a>
+  </div>
+</aside>
+
+<main class="flex-1 md:ml-[220px] pb-20 md:pb-0">
+<header class="sticky top-0 bg-white/80 dark:bg-dark-100/80 backdrop-blur-xl z-40 border-b border-gray-200/50 dark:border-dark-300/50">
+  <div class="flex items-center justify-between px-4 py-3">
+    <div class="md:hidden flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-primary/20">50</div>
+      <span class="font-semibold text-base bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">50AI导航</span>
+    </div>
+    <div class="flex-1 max-w-md mx-2 md:mx-4">
+      <div class="relative">
+        <input id="search" oninput="render()" placeholder="搜索AI工具..." class="search-input w-full h-10 pl-10 pr-4 rounded-xl bg-white/80 dark:bg-dark-200/80 border border-gray-200/50 dark:border-dark-300/50 text-sm focus:outline-none focus:border-primary/50 transition-all">
+        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="text-xs text-gray-500 hidden sm:inline flex items-center gap-1">
+        <i class="fa-solid fa-eye text-primary/50"></i>
+        访客:<b id="count" class="text-primary font-semibold">0</b>
+      </span>
+      <button onclick="toggleDark()" class="w-9 h-9 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 dark:from-dark-200 dark:to-dark-300 flex items-center justify-center shadow-sm hover:shadow-md transition-all">
+        <i class="fa-solid fa-moon dark:hidden text-gray-600"></i>
+        <i class="fa-solid fa-sun hidden dark:block text-yellow-400"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="p-5">
+  <!-- 网站域名展示 -->
+  <div class="text-center mb-10 page-load">
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20 mb-4">
+      <i class="fa-solid fa-sparkles text-primary"></i>
+      <span class="text-sm text-gray-600 dark:text-gray-300">专业AI工具导航</span>
+    </div>
+    <div class="text-5xl font-black bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent mb-3 tracking-tight">50c.cn</div>
+    <p class="text-base text-gray-500 dark:text-gray-400 max-w-md mx-auto">一键直达智能未来，收录全网最全AI工具</p>
+  </div>
+  
+  <!-- 推广专区 -->
+  <div class="mb-10 animate-fade-in">
+    <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+      <i class="fa-solid fa-bullhorn text-primary animate-pulse-soft"></i> 推荐服务
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <!-- 阿里云推广 -->
+      <a href="https://www.aliyun.com" target="_blank" class="tool-card glass-card rounded-2xl p-5 border border-blue-200/50 dark:border-blue-900/30 hover:border-blue-400/50 dark:hover:border-blue-700/50 relative cursor-pointer group">
+        <div class="absolute top-3 right-3">
+          <span class="px-2 py-1 text-xs bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full shadow-sm">推荐</span>
+        </div>
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/30 group-hover:scale-110 transition-transform">
+          <img src="https://www.aliyun.com/favicon.ico?v=2" class="w-7 h-7 object-contain" alt="阿里云">
+        </div>
+        <h3 class="font-semibold text-sm mb-1">阿里云 AI 服务</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400">AI大模型服务 | 云服务器 | 人工智能平台</p>
+      </a>
+      <!-- 火山引擎推广 -->
+      <a href="https://www.volcengine.com" target="_blank" class="tool-card glass-card rounded-2xl p-5 border border-orange-200/50 dark:border-orange-900/30 hover:border-orange-400/50 dark:hover:border-orange-700/50 relative cursor-pointer group">
+        <div class="absolute top-3 right-3">
+          <span class="px-2 py-1 text-xs bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-full shadow-sm">推荐</span>
+        </div>
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/30 group-hover:scale-110 transition-transform">
+          <img src="https://www.volcengine.com/favicon.ico" class="w-7 h-7 object-contain" alt="火山引擎">
+        </div>
+        <h3 class="font-semibold text-sm mb-1">火山引擎 AI 服务</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400">AI大模型服务 | 智能视频 | 数据分析</p>
+      </a>
+      <!-- TOKEN代理项目推广 -->
+      <a href="https://www.example.com" target="_blank" class="tool-card glass-card rounded-2xl p-5 border border-purple-200/50 dark:border-purple-900/30 hover:border-purple-400/50 dark:hover:border-purple-700/50 relative cursor-pointer group">
+        <div class="absolute top-3 right-3">
+          <span class="px-2 py-1 text-xs bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full shadow-sm">推荐</span>
+        </div>
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/30 group-hover:scale-110 transition-transform">
+          <i class="fa-solid fa-link text-purple-500 text-xl"></i>
+        </div>
+        <h3 class="font-semibold text-sm mb-1">TOKEN代理项目</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400">AI服务代理 | 优惠Token | 专业技术支持</p>
+      </a>
+    </div>
+  </div>
+  
+  <!-- 公众号干货专区：私域引流 -->
+  <div class="mb-8">
+    <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+      <i class="fa-brands fa-weixin text-green-500"></i> AI干货精选
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <a href="https://mp.weixin.qq.com/你的公众号" target="_blank" class="bg-white dark:bg-[#1a1a1c] rounded-xl overflow-hidden border border-gray-200 dark:border-[#27272a] hover:shadow-md transition-all">
+        <img src="https://picsum.photos/400/200?aig" class="w-full h-32 object-cover">
+        <div class="p-4">
+          <h3 class="font-semibold text-sm line-clamp-2">AI绘画零基础教程｜新手速成</h3>
+          <p class="text-xs text-gray-500 mt-2">关注公众号获取完整教程</p>
+        </div>
+      </a>
+      <a href="https://mp.weixin.qq.com/你的公众号" target="_blank" class="bg-white dark:bg-[#1a1a1c] rounded-xl overflow-hidden border border-gray-200 dark:border-[#27272a] hover:shadow-md transition-all">
+        <img src="https://picsum.photos/400/200#aiv" class="w-full h-32 object-cover">
+        <div class="p-4">
+          <h3 class="font-semibold text-sm line-clamp-2">AI视频工具全攻略｜高效创作</h3>
+          <p class="text-xs text-gray-500 mt-2">关注公众号获取完整教程</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- 工具列表：全官方LOGO + 无痕推广 -->
+<div id="list" class="tool-grid grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+</div>
+</div>
+
+<footer class="mt-10 py-8 border-t border-gray-200/50 dark:border-dark-300/50 text-center text-sm text-gray-500 dark:text-gray-400 pb-24 md:pb-8">
+  <div class="flex items-center justify-center gap-2 mb-3">
+    <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-primary/20">50</div>
+    <span class="font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">50AI导航 · 专业AI工具箱</span>
+  </div>
+  <div class="mt-4 mb-5">
+    <div class="text-2xl font-black bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">50c.cn</div>
+  </div>
+  <p class="text-gray-600 dark:text-gray-300">© 2025 50AI导航 | 全网最全AI工具导航</p>
+  <p class="mt-2 flex items-center justify-center gap-4">
+    <span class="flex items-center gap-1"><i class="fa-solid fa-mobile-screen text-primary/50"></i> 公众号：50AI导航</span>
+    <span class="flex items-center gap-1"><i class="fa-solid fa-handshake text-accent/50"></i> 广告合作：联系公众号</span>
+  </p>
+  <p class="mt-3 text-primary font-medium flex items-center justify-center gap-1">
+    <i class="fa-solid fa-sparkles"></i>
+    50AI导航，一键直达智能未来
+  </p>
+</footer>
+</main>
+</div>
+
+<!-- 移动端底部导航栏 -->
+<nav id="mobileNav" class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-dark-100/90 backdrop-blur-xl border-t border-gray-200/50 dark:border-dark-300/50 z-50 flex md:hidden safe-area-inset-bottom shadow-lg">
+  <div class="flex justify-around items-center py-2 w-full">
+    <button onclick="filter('all','')" class="mobile-nav-item active relative flex flex-col items-center gap-1 px-4 py-2 text-primary">
+      <i class="fa-solid fa-th-large text-lg"></i>
+      <span class="text-xs font-medium">全部</span>
+    </button>
+    <button onclick="filter('write','')" class="mobile-nav-item relative flex flex-col items-center gap-1 px-4 py-2 text-gray-500">
+      <i class="fa-solid fa-pen text-lg"></i>
+      <span class="text-xs">写作</span>
+    </button>
+    <button onclick="filter('img','')" class="mobile-nav-item relative flex flex-col items-center gap-1 px-4 py-2 text-gray-500">
+      <i class="fa-solid fa-image text-lg"></i>
+      <span class="text-xs">绘画</span>
+    </button>
+    <button onclick="filter('video','')" class="mobile-nav-item relative flex flex-col items-center gap-1 px-4 py-2 text-gray-500">
+      <i class="fa-solid fa-video text-lg"></i>
+      <span class="text-xs">视频</span>
+    </button>
+    <button onclick="showFav()" class="mobile-nav-item relative flex flex-col items-center gap-1 px-4 py-2 text-gray-500">
+      <i class="fa-solid fa-star text-lg"></i>
+      <span class="text-xs">收藏</span>
+    </button>
+  </div>
+</nav>
+
+<!-- 提交工具弹窗 -->
+<div id="modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center">
+  <div class="bg-white dark:bg-slate-800 rounded-xl w-full max-w-md p-6">
+    <h3 class="text-lg font-bold mb-4">提交AI工具</h3>
+    <input id="sname" placeholder="工具名称" class="w-full p-2 rounded mb-2 border">
+    <input id="surl" placeholder="工具链接" class="w-full p-2 rounded mb-2 border">
+    <input id="sdesc" placeholder="工具简介" class="w-full p-2 rounded mb-4 border">
+    <div class="flex justify-end gap-2">
+      <button onclick="closeSubmit()" class="px-4 py-2 rounded bg-gray-200">取消</button>
+      <button onclick="submitTool()" class="px-4 py-2 rounded bg-primary text-white">提交</button>
+    </div>
+  </div>
+</div>
+
+<!-- 工具详情弹窗 -->
+<div id="toolDetailModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center">
+  <div class="bg-white dark:bg-slate-800 rounded-xl w-full max-w-md p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h3 id="toolDetailName" class="text-lg font-bold"></h3>
+      <button onclick="closeToolDetail()" class="text-gray-500">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="flex items-center gap-4 mb-4">
+      <div class="w-16 h-16 rounded-xl flex items-center justify-center bg-gray-50 dark:bg-slate-800">
+        <img id="toolDetailLogo" src="" class="w-10 h-10 object-contain" alt="">
+      </div>
+      <div>
+        <p id="toolDetailCategory" class="text-sm text-gray-500"></p>
+        <div id="toolDetailTags" class="flex gap-2 mt-2"></div>
+      </div>
+    </div>
+    <div class="mb-4">
+      <h4 class="font-medium mb-2">工具简介</h4>
+      <p id="toolDetailDesc" class="text-sm text-gray-600 dark:text-gray-300">
+        这是一个功能强大的AI工具，为用户提供专业的AI服务。
+      </p>
+    </div>
+    <!-- 推广信息容器 -->
+    <div id="toolDetailPromo"></div>
+    <div class="flex gap-2">
+      <a id="toolDetailLink" href="" target="_blank" class="flex-1 px-4 py-2 rounded bg-primary text-white text-center">
+        访问官网
+      </a>
+      <button id="toolDetailFavBtn" onclick="toggleFavFromDetail()" class="px-4 py-2 rounded bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200">
+        <i class="fa-solid fa-star"></i> 收藏
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ==============================================
+// 🔥 核心：全品类AI工具 + 100%官方原版LOGO + 无遗漏
+// 🔥 规则：AI绘画 = 火山Token链接 | AI视频 = 阿里云Token链接 | 其他=官方官网
+// ==============================================
+const tools = [
+  // 🔤 AI写作工具（官方LOGO + 官网链接）
+  {name:"ChatGPT",c:"write",u:"https://chat.openai.com",hot:1},
+  {name:"文心一言",c:"write",u:"https://yiyan.baidu.com",cn:1,hot:1},
+  {name:"豆包",c:"write",u:"https://www.doubao.com",cn:1,hot:1},
+  {name:"通义千问",c:"write",u:"https://tongyi.aliyun.com",cn:1,hot:1},
+  {name:"Claude",c:"write",u:"https://claude.ai",hot:1},
+  {name:"Gemini",c:"write",u:"https://gemini.google.com",hot:1},
+  {name:"Kimi",c:"write",u:"https://kimi.moonshot.cn",cn:1,hot:1},
+  {name:"智谱清言",c:"write",u:"https://chatglm.cn",cn:1},
+
+  {name:"讯飞星火",c:"write",u:"https://xinghuo.xfyun.cn",cn:1},
+
+  // 🎨 AI绘画工具（官方LOGO + 官网链接）
+  {name:"Midjourney",c:"img",u:"https://www.midjourney.com",hot:1},
+  {name:"DALL·E 3",c:"img",u:"https://openai.com/dall-e-3",hot:1},
+  {name:"Stable Diffusion",c:"img",u:"https://stability.ai/stable-diffusion",hot:1},
+  {name:"即梦AI",c:"img",u:"https://jimeng.jianying.com/",cn:1,hot:1},
+  {name:"醒图AI",c:"img",u:"https://www.retouchpics.com",cn:1},
+  {name:"美图AI",c:"img",u:"https://www.designkit.cn",cn:1},
+
+  // 🎬 AI视频工具（官方LOGO + 官网链接）
+  {name:"Runway",c:"video",u:"https://runwayml.com",hot:1},
+  {name:"Pika",c:"video",u:"https://pika.art/",hot:1},
+  {name:"剪映AI",c:"video",u:"https://www.capcut.com",cn:1,hot:1},
+  {name:"可灵AI",c:"video",u:"https://klingai.com/",cn:1},
+  {name:"Vidu",c:"video",u:"https://www.vidu.cn/",hot:1},
+  {name:"Sora 2",c:"video",u:"https://openai.com/sora",hot:1},
+  {name:"即梦视频",c:"video",u:"https://jimeng.jianying.com/",cn:1,hot:1},
+  {name:"通义万象视频",c:"video",u:"https://wanxiang.aliyun.com",cn:1,hot:1},
+  {name:"快影AI",c:"video",u:"https://www.kuaishou.com/kuaiying",cn:1,hot:1},
+  {name:"必剪AI",c:"video",u:"https://bcut.bilibili.cn/",cn:1,hot:1},
+  {name:"Virbo",c:"video",u:"https://virbo.wondershare.cn",cn:1,hot:1},
+  {name:"ZeroCut AI",c:"video",u:"https://zerocut.ai",hot:1},
+  {name:"有言",c:"video",u:"https://www.youyan3d.com/",cn:1,hot:1},
+  {name:"快剪辑",c:"video",u:"https://kuaijianji.com",cn:1,hot:1},
+  {name:"度加",c:"video",u:"https://dujia.baidu.com",cn:1,hot:1},
+  {name:"D-human数字人",c:"video",u:"https://www.d-human.cn/",cn:1,hot:1},
+  {name:"快转字幕",c:"video",u:"https://www.kzzimu.com/",cn:1,hot:1},
+  {name:"来画",c:"video",u:"https://laihua.com",cn:1,hot:1},
+  {name:"象寄翻译",c:"video",u:"https://www.xiangjifanyi.com/",cn:1,hot:1},
+  {name:"万彩AI",c:"video",u:"https://ai.kezhan365.com/",cn:1,hot:1},
+  {name:"鬼手剪辑",c:"video",u:"https://cn.jollytoday.com/",cn:1,hot:1},
+  {name:"VAS视频加字幕",c:"video",u:"https://www.vaszimu.com/",hot:1},
+  {name:"一起剪",c:"video",u:"https://yiqijian.com",cn:1,hot:1},
+  {name:"知作",c:"video",u:"https://hd.zizo.pro/",cn:1,hot:1},
+  {name:"33字幕",c:"video",u:"https://www.33subs.com/",cn:1,hot:1},
+  {name:"闪剪",c:"video",u:"https://shanjian.tv/",cn:1,hot:1},
+  {name:"wink",c:"video",u:"https://wink.cn/",hot:1},
+
+  // 🔊 AI音频工具（官方LOGO + 官网链接）
+  {name:"ElevenLabs",c:"audio",u:"https://elevenlabs.io/",hot:1},
+  {name:"Suno",c:"audio",u:"https://www.suno.cn/",hot:1},
+  {name:"讯飞配音",c:"audio",u:"https://peiyin.xunfei.cn/",cn:1},
+  {name:"逗哥配音",c:"audio",u:"https://www.douge.com/",cn:1},
+  {name:"海螺AI",c:"audio",u:"https://hailuoai.com",cn:1},
+  {name:"智声云配",c:"audio",u:"https://dubbingx.com/",cn:1},
+  {name:"SongGenerator",c:"audio",u:"https://huggingface.co/spaces/tencent/SongGeneration"},
+  {name:"魔音工坊",c:"audio",u:"https://www.moyin.com/",cn:1},
+  {name:"Mureka",c:"audio",u:"https://mureka.ai"},
+  {name:"AnyVoice",c:"audio",u:"https://anyvoice.cn/"},
+  {name:"TTSOpenAI",c:"audio",u:"https://ttsopenai.com"},
+  {name:"Noiz AI",c:"audio",u:"https://noiz.ai"},
+  {name:"Speechma",c:"audio",u:"https://speechma.com"},
+  {name:"Fish Audio",c:"audio",u:"https://fishaudio.ai"},
+  {name:"讯飞听见",c:"audio",u:"https://www.iflyrec.com/",cn:1},
+  {name:"刺鸟配音",c:"audio",u:"https://cibirdpeiyin.com",cn:1},
+  {name:"蓝藻AI",c:"audio",u:"https://lanzhaoai.com",cn:1},
+  {name:"BGM猫",c:"audio",u:"https://bgmcat.com",cn:1},
+  {name:"大饼AI变声",c:"audio",u:"https://dabingai.com",cn:1,hot:1},
+  {name:"讯飞智作",c:"audio",u:"https://zhizuo.xfyun.cn",cn:1,hot:1},
+  {name:"网易天音",c:"audio",u:"https://tianyin.163.com",cn:1,hot:1},
+  {name:"呱呱有声",c:"audio",u:"https://guaguayousheng.com",cn:1,hot:1},
+  {name:"魔音工坊",c:"audio",u:"https://www.moyin.com/",cn:1,hot:1},
+  {name:"标贝悦读",c:"audio",u:"https://yuedu.data-baker.com",cn:1,hot:1},
+  {name:"团子AI",c:"audio",u:"https://dango.ai",cn:1,hot:1},
+  {name:"音子AI",c:"audio",u:"https://yinzi.ai",cn:1,hot:1},
+  {name:"歌词生成",c:"audio",u:"https://geci.sogou.com",cn:1,hot:1},
+  {name:"网易云音乐·X-Studio",c:"audio",u:"https://music.163.com/studio",cn:1,hot:1},
+  {name:"MotionSound",c:"audio",u:"https://motionsound.ai",hot:1},
+  {name:"快快字幕",c:"audio",u:"https://kuaikuaizimu.com",cn:1},
+  {name:"悦音配音",c:"audio",u:"https://yueyinpeiyin.com",cn:1},
+  {name:"音虫",c:"audio",u:"https://yincong.ai",cn:1},
+  {name:"通义听悟",c:"audio",u:"https://tingwu.aliyun.com",cn:1},
+  {name:"TTSMaker",c:"audio",u:"https://ttsmaker.com"},
+  {name:"WellSaid Labs",c:"audio",u:"https://wellsaidlabs.com"},
+
+  // 💻 AI编程工具（官方LOGO + 官网链接）
+  {name:"GitHub Copilot",c:"code",u:"https://github.com/copilot",hot:1},
+  {name:"Cursor",c:"code",u:"https://cursor.sh",hot:1},
+  {name:"通义灵码",c:"code",u:"https://lingma.aliyun.com",cn:1},
+
+  // 🎭 AI设计工具（官方LOGO + 官网链接）
+  {name:"Figma AI",c:"design",u:"https://www.figma.com",hot:1},
+  {name:"Canva可画",c:"design",u:"https://www.canva.com",cn:1,hot:1},
+  {name:"稿定设计",c:"design",u:"https://www.gaoding.com",cn:1},
+  {name:"LinkFox AI",c:"design",u:"https://linkfox.ai",cn:1},
+  {name:"创客贴AI",c:"design",u:"https://chuangketie.com/ai",cn:1},
+  {name:"炼丹家AI",c:"design",u:"https://liandan.ai",cn:1},
+  {name:"A1.art",c:"design",u:"https://a1.art"},
+  {name:"Civitai",c:"design",u:"https://civitai.com"},
+  {name:"Freepik AI Image",c:"design",u:"https://freepik.com/ai-image-generator"},
+  {name:"Remove.bg",c:"design",u:"https://remove.bg"},
+  {name:"Ideogram",c:"design",u:"https://ideogram.ai"},
+  {name:"Ribbet.ai",c:"design",u:"https://ribbet.ai"},
+  {name:"超能画布",c:"design",u:"https://chaoneng.huabu.com",cn:1},
+  {name:"Bing Image Creator",c:"design",u:"https://www.bing.com/create"},
+  {name:"PhotoRoom",c:"design",u:"https://photoroom.com"},
+  {name:"PicWish",c:"design",u:"https://picwish.com"},
+  {name:"PhotoStudio AI",c:"design",u:"https://photostudio.ai"},
+  {name:"星流AI",c:"design",u:"https://xingliu.ai",cn:1},
+  {name:"通义万相",c:"design",u:"https://tongyi.aliyun.com/wan/",cn:1},
+  {name:"光子AI",c:"design",u:"https://guangzi.ai",cn:1,hot:1},
+  {name:"潮际好麦",c:"design",u:"https://chaojihaomai.com",cn:1,hot:1},
+  {name:"妙思",c:"design",u:"https://miaosi.ai",cn:1,hot:1},
+  {name:"千鹿AI",c:"design",u:"https://qianlu.ai",cn:1,hot:1},
+  {name:"绘蛙",c:"design",u:"https://huiwa.ai",cn:1,hot:1},
+  {name:"匹紫AI",c:"design",u:"https://pizi.ai",cn:1,hot:1},
+  {name:"Pippit AI",c:"design",u:"https://pippit.ai",cn:1,hot:1},
+  {name:"即创",c:"design",u:"https://jichuang.ai",cn:1,hot:1},
+
+  // 🔍 AI搜索（官方LOGO + 官网链接）
+  {name:"Perplexity",c:"search",u:"https://www.perplexity.ai",hot:1},
+  {name:"秘塔搜索",c:"search",u:"https://suo.metasota.cn",cn:1},
+  {name:"Semantic Scholar",c:"search",u:"https://www.semanticscholar.org",hot:1},
+  {name:"Miku AI",c:"search",u:"https://miku.ai",hot:1},
+  {name:"Reddoo",c:"search",u:"https://reddoo.ai",hot:1},
+  {name:"链企AI",c:"search",u:"https://lianqi.ai",cn:1,hot:1},
+  {name:"开搜AI",c:"search",u:"https://kaisou.ai",cn:1,hot:1},
+  {name:"悟空AI搜索",c:"search",u:"https://wukong.ai/search",cn:1,hot:1},
+  {name:"心流",c:"search",u:"https://xinliu.ai",cn:1,hot:1},
+  {name:"百度AI搜索版",c:"search",u:"https://ai.baidu.com",cn:1,hot:1},
+
+  {name:"智谱清言插件",c:"search",u:"https://chatglm.cn/plugin",cn:1,hot:1},
+  {name:"移塔AI搜索",c:"search",u:"https://yita.ai",cn:1,hot:1},
+  // 🖥️ AI浏览器
+  {name:"Tabbit",c:"search",u:"https://tabbit.ai",hot:1},
+  {name:"Dia",c:"search",u:"https://dia.ai",hot:1},
+  {name:"Fellou",c:"search",u:"https://fellou.ai",hot:1},
+  
+  // 📚 AI小说创作工具
+  {name:"笔灵AI小说",c:"novel",u:"https://bilingai.com",cn:1,hot:1},
+  {name:"星月写作",c:"novel",u:"https://xingyuexiezuo.com",cn:1},
+  {name:"蛙蛙写作",c:"novel",u:"https://aiwaves-inc.com",cn:1},
+
+  {name:"笔灵AI论文",c:"novel",u:"https://bilingai.com/lunwen",cn:1},
+  {name:"66AI论文",c:"novel",u:"https://66ai.lunwen.com",cn:1},
+  {name:"巧文书",c:"novel",u:"https://qiaowenshu.com",cn:1},
+  {name:"讯飞绘文",c:"novel",u:"https://huiwen.xfyun.cn",cn:1},
+  
+  // 🎭 AI数字人工具
+  {name:"必火AI",c:"digital",u:"https://bihuoai.com",cn:1,hot:1},
+  {name:"极梦数字人",c:"digital",u:"https://jimengai.com/digital",cn:1,hot:1},
+  {name:"剪映数字人",c:"digital",u:"https://www.capcut.com/digital-human",cn:1,hot:1},
+  {name:"有言AI",c:"digital",u:"https://www.youyan3d.com/",cn:1,hot:1},
+  {name:"JoggAI",c:"digital",u:"https://www.jogg.ai",hot:1},
+  {name:"Joypix",c:"digital",u:"https://joypix.ai",hot:1},
+  {name:"妙播",c:"digital",u:"https://miaobo.ai",cn:1,hot:1},
+  {name:"蝉镜",c:"digital",u:"https://www.chanjing.cc",cn:1,hot:1},
+  {name:"飞影数字人",c:"digital",u:"https://feiying.ai",cn:1,hot:1},
+  
+  // 🖼️ AI图像创作平台
+  {name:"哩布哩布AI",c:"img",u:"https://www.liblib.art",cn:1,hot:1},
+  {name:"Liblib TV",c:"img",u:"https://www.liblib.tv",cn:1,hot:1},
+  
+  // 📊 AI PPT工具
+  {name:"AiPPT",c:"ppt",u:"https://aippt.com",hot:1},
+  {name:"博思AIPPT",c:"ppt",u:"https://pptgo.com",cn:1},
+  
+  // 🤖 AI Agent平台
+  {name:"扣子",c:"agent",u:"https://www.coze.cn",cn:1,hot:1},
+  {name:"AutoGPT",c:"agent",u:"https://github.com/Significant-Gravitas/Auto-GPT",hot:1},
+  {name:"BabyAGI",c:"agent",u:"https://github.com/yoheinakajima/babyagi",hot:1},
+  {name:"GPT-Engineer",c:"agent",u:"https://github.com/AntonOsika/gpt-engineer",hot:1},
+  {name:"AgentGPT",c:"agent",u:"https://agentgpt.reworkd.ai",hot:1},
+  {name:"Jarvis",c:"agent",u:"https://jarvis.ai",hot:1},
+  {name:"CrewAI",c:"agent",u:"https://www.crewai.com",hot:1},
+  {name:"LangChain",c:"agent",u:"https://www.langchain.com",hot:1},
+  {name:"OpenClaw",c:"agent",u:"https://openclaw.ai",cn:1,hot:1},
+
+  {name:"Kimi Claw",c:"agent",u:"https://kimi.moonshot.cn",cn:1,hot:1},
+  {name:"ArkClaw",c:"agent",u:"https://www.volcengine.com/",hot:1},
+  {name:"悟空",c:"agent",u:"https://wukong.ai",cn:1,hot:1},
+  {name:"MaxClaw",c:"agent",u:"https://maxclaw.com",hot:1},
+  {name:"NemoClaw",c:"agent",u:"https://nemoclaw.com",hot:1},
+  {name:"牛马 AI",c:"agent",u:"https://niumai.com",cn:1,hot:1},
+  {name:"Linkfox Claw",c:"agent",u:"https://linkfox.ai",hot:1},
+  {name:"LobsterAI 有道龙虾",c:"agent",u:"https://lobsterai.com",cn:1,hot:1},
+  {name:"AutoClaw",c:"agent",u:"https://autoclaw.com",hot:1},
+  {name:"JVS Claw",c:"agent",u:"https://jvsclaw.com",hot:1},
+  {name:"CoPaw",c:"agent",u:"https://copaw.com",hot:1},
+  {name:"EasyClaw",c:"agent",u:"https://easyclaw.com",hot:1},
+  {name:"Qclaw",c:"agent",u:"https://qclaw.com",hot:1},
+  {name:"Claude Code",c:"agent",u:"https://claude.ai/code",hot:1},
+  {name:"Manus",c:"agent",u:"https://manus.ai",hot:1},
+  {name:"WorkBuddy",c:"agent",u:"https://www.codebuddy.cn/work/",cn:1,hot:1},
+  {name:"金灵AI",c:"agent",u:"https://jinling.ai",cn:1,hot:1},
+  {name:"Flowith",c:"agent",u:"https://flowith.com",hot:1},
+  {name:"讯飞星辰Agent",c:"agent",u:"https://xingchen.xfyun.cn",cn:1,hot:1},
+  {name:"智谱CoCo",c:"agent",u:"https://coco.chatglm.cn",cn:1,hot:1},
+  {name:"FlowAI",c:"agent",u:"https://flowai.com",hot:1},
+  {name:"MasterAgent AI",c:"agent",u:"https://masteragent.ai",hot:1},
+  {name:"灵码IDE",c:"agent",u:"https://lingma.aliyun.com",cn:1,hot:1},
+  {name:"MGX",c:"agent",u:"https://mgx.ai",hot:1},
+  {name:"Hailuo Video",c:"agent",u:"https://hailuo.video",cn:1,hot:1},
+  {name:"MiniMax Agent",c:"agent",u:"https://minimax.chat",cn:1,hot:1},
+  {name:"Genspark",c:"agent",u:"https://genspark.ai",hot:1},
+  {name:"AutoGLM沉思",c:"agent",u:"https://autoglm.cn",cn:1,hot:1},
+  {name:"RabbitOS",c:"agent",u:"https://rabbitos.ai",hot:1},
+  {name:"NoCode",c:"agent",u:"https://nocode.cn/",hot:1},
+  {name:"Lovart",c:"agent",u:"https://lovart.ai",hot:1},
+  
+  {name:"Suna",c:"agent",u:"https://suna.ai",hot:1},
+  {name:"Skywork",c:"agent",u:"https://skywork.ai",hot:1},
+  {name:"Operator",c:"agent",u:"https://operator.ai",hot:1},
+  {name:"悟空智能体",c:"agent",u:"https://wukong.ai",cn:1,hot:1},
+  {name:"阿里智能体",c:"agent",u:"https://agent.aliyun.com",cn:1,hot:1},
+  
+
+  
+  // 📝 AI提示指令工具
+  {name:"PromptPilot",c:"prompt",u:"https://promptpilot.ai"},
+  {name:"Learn Prompting",c:"prompt",u:"https://learnprompting.org"},
+  {name:"ImagePrompt",c:"prompt",u:"https://imageprompt.ai"},
+  {name:"Public Prompts",c:"prompt",u:"https://publicprompts.ai"},
+  {name:"Snack Prompt",c:"prompt",u:"https://snackprompt.com"},
+  {name:"AIPRM",c:"prompt",u:"https://aiprm.com"},
+  {name:"Visual Prompt",c:"prompt",u:"https://visualprompt.ai"},
+  {name:"PromptFolder",c:"prompt",u:"https://promptfolder.com"},
+  {name:"PromptBase",c:"prompt",u:"https://promptbase.com"},
+  {name:"WorkMind.AI",c:"prompt",u:"https://workmind.ai"},
+  {name:"prompts.chat",c:"prompt",u:"https://prompts.chat"},
+  {name:"Learning Prompt",c:"prompt",u:"https://learningprompt.ai"},
+  {name:"AI Short",c:"prompt",u:"https://aishort.com"},
+  {name:"绘AI",c:"prompt",u:"https://hui.ai",cn:1},
+  {name:"词魂",c:"prompt",u:"https://cihun.com",cn:1},
+  {name:"AI Wind",c:"prompt",u:"https://aiwind.org",hot:1},
+  {name:"Local Banana",c:"prompt",u:"https://www.localbanana.io",hot:1},
+  {name:"Kalos Art Lib",c:"prompt",u:"https://lib.kalos.art",hot:1},
+  
+  // 🎭 AI漫剧工具
+  {name:"AI漫剧生成器",c:"comic",u:"https://aimanju.com",cn:1,hot:1},
+  {name:"漫剧AI",c:"comic",u:"https://manju.ai",cn:1},
+  {name:"AI漫画生成",c:"comic",u:"https://aimanhua.com",cn:1},
+  {name:"Comic AI",c:"comic",u:"https://comic.ai"},
+  {name:"漫剧生成AI",c:"comic",u:"https://manjushengcheng.com",cn:1},
+  
+  // 💼 AI办公工具
+  {name:"天工短剧工作台",c:"office",u:"https://tiangong.ai",cn:1,hot:1},
+  {name:"AniShort",c:"office",u:"https://anishort.ai",hot:1},
+  
+  // 💻 AI编程工具
+  {name:"TRAE编程",c:"code",u:"https://trae.io",hot:1},
+  
+  // 🎯 新增AI工具
+
+  {name:"Bard",c:"write",u:"https://bard.google.com",hot:1},
+  {name:"LLaMA",c:"write",u:"https://meta.ai/llama",hot:1},
+  {name:"Mistral",c:"write",u:"https://mistral.ai",hot:1},
+
+  {name:"Stable Diffusion XL",c:"img",u:"https://stability.ai/stable-diffusion-xl",hot:1},
+  {name:"ControlNet",c:"img",u:"https://github.com/lllyasviel/ControlNet",hot:1},
+  {name:"Lensa",c:"img",u:"https://lensa.ai",hot:1},
+  {name:"FaceApp",c:"img",u:"https://www.faceapp.com",hot:1},
+  {name:"Descript",c:"video",u:"https://www.descript.com",hot:1},
+  {name:"Synthesia",c:"video",u:"https://www.synthesia.io",hot:1},
+  {name:"DeepFaceLab",c:"video",u:"https://github.com/iperov/DeepFaceLab",hot:1},
+  {name:"Podcast.ai",c:"audio",u:"https://podcast.ai",hot:1},
+  {name:"Descript Voice",c:"audio",u:"https://www.descript.com/voice",hot:1},
+  {name:"Voice.ai",c:"audio",u:"https://voice.ai",hot:1},
+  {name:"Tabnine",c:"code",u:"https://www.tabnine.com",hot:1},
+  {name:"Codeium",c:"code",u:"https://codeium.com",hot:1},
+  {name:"Replit AI",c:"code",u:"https://replit.com/ai",hot:1},
+  {name:"Adobe Firefly",c:"design",u:"https://firefly.adobe.com",hot:1},
+  {name:"PicsArt",c:"design",u:"https://picsart.com",hot:1},
+  {name:"Snapseed",c:"design",u:"https://snapseed.app",hot:1},
+  {name:"Bing AI",c:"search",u:"https://www.bing.com/chat",hot:1},
+  {name:"Google SGE",c:"search",u:"https://www.google.com/sge",hot:1},
+  {name:"You.com",c:"search",u:"https://you.com",hot:1},
+  {name:"NovelAI",c:"novel",u:"https://novelai.net",hot:1},
+  {name:"AI Dungeon",c:"novel",u:"https://aidungeon.io",hot:1},
+  {name:"Character.AI",c:"novel",u:"https://character.ai",hot:1},
+  {name:"Runway Gen-2",c:"video",u:"https://runwayml.com/gen-2",hot:1},
+  {name:"Kaiber",c:"video",u:"https://kaiber.ai",hot:1},
+  {name:"Steve AI",c:"video",u:"https://steve.ai",hot:1},
+  {name:"Soundful",c:"audio",u:"https://soundful.com",hot:1},
+  {name:"AIVA",c:"audio",u:"https://www.aiva.ai",hot:1},
+  {name:"Amper Music",c:"audio",u:"https://www.ampermusic.com",hot:1},
+  {name:"GitHub Copilot X",c:"code",u:"https://github.com/features/preview/copilot-x",hot:1},
+  {name:"Sourcegraph Cody",c:"code",u:"https://sourcegraph.com/cody",hot:1},
+  {name:"AWS CodeWhisperer",c:"code",u:"https://aws.amazon.com/codewhisperer",hot:1},
+  {name:"Figma Auto Layout",c:"design",u:"https://www.figma.com/auto-layout",hot:1},
+  {name:"Canva Magic Design",c:"design",u:"https://www.canva.com/magic-design",hot:1},
+  {name:"Tailwind CSS AI",c:"design",u:"https://tailwindcss.com/ai",hot:1},
+  {name:"Kagi",c:"search",u:"https://kagi.com",hot:1},
+  {name:"Jasper",c:"novel",u:"https://www.jasper.ai",hot:1},
+  {name:"Copy.ai",c:"novel",u:"https://www.copy.ai",hot:1},
+  {name:"Writesonic",c:"novel",u:"https://writesonic.com",hot:1},
+  {name:"Elai.io",c:"digital",u:"https://elai.io",hot:1},
+  {name:"Gamma",c:"ppt",u:"https://gamma.app",hot:1},
+  {name:"Tome",c:"ppt",u:"https://tome.app",hot:1},
+  {name:"Beautiful.ai",c:"ppt",u:"https://www.beautiful.ai",hot:1},
+  {name:"AutoGPT",c:"agent",u:"https://github.com/Significant-Gravitas/Auto-GPT",hot:1},
+  {name:"BabyAGI",c:"agent",u:"https://github.com/yoheinakajima/babyagi",hot:1},
+  {name:"GPT-Engineer",c:"agent",u:"https://github.com/AntonOsika/gpt-engineer",hot:1},
+
+  // 🚀 新增工具
+  {name:"Trae",c:"write",u:"https://www.trae.cn",hot:1},
+
+];
+
+
+
+// 工具类别映射
+const categoryMap = {
+  write: 'AI写作/对话',
+  img: 'AI绘画',
+  video: 'AI视频',
+  audio: 'AI音频',
+  code: 'AI编程',
+  design: 'AI设计',
+  search: 'AI搜索',
+  novel: 'AI小说创作',
+  digital: 'AI数字人',
+  ppt: 'AI PPT工具',
+  agent: 'AI Agent平台',
+  comic: 'AI漫剧',
+  office: 'AI办公工具'
+};
+
+// 替换原有的 getToolLogo 函数
+function getToolLogo(toolName, toolUrl) {
+  // 1. 优先使用手动配置的官方LOGO（保证精准度）
+  const logoMap = {
+    'ChatGPT': 'https://openai.com/favicon.ico',
+    '文心一言': 'https://yiyan.baidu.com/favicon.ico?v=2',
+    '豆包': 'https://www.doubao.com/favicon.ico',
+    '通义千问': 'https://tongyi.aliyun.com/favicon.ico?v=2',
+    'Claude': 'https://www.anthropic.com/favicon.ico',
+    'Gemini': 'https://gemini.google.com/favicon.ico',
+    'Kimi': 'https://kimi.moonshot.cn/favicon.ico',
+    '智谱清言': 'https://chatglm.cn/favicon.ico',
+    '讯飞星火': 'https://xinghuo.xfyun.cn/favicon.ico',
+
+    'Midjourney': 'https://www.midjourney.com/favicon.ico',
+    'DALL·E 3': 'https://openai.com/favicon.ico',
+    'Stable Diffusion': 'https://stability.ai/favicon.ico',
+    '即梦AI': 'https://jimeng.jianying.com/favicon.ico',
+    '醒图AI': 'https://www.retouchpics.com/favicon.ico',
+    '美图AI': 'https://www.designkit.cn/favicon.ico',
+    'Runway': 'https://runwayml.com/favicon.ico',
+    'Pika': 'https://pika.art/favicon.ico',
+    '剪映AI': 'https://www.capcut.cn/favicon.ico',
+    '可灵AI': 'https://klingai.com/favicon.ico',
+    'Vidu': 'https://www.vidu.cn/favicon.ico',
+    'Sora 2': 'https://openai.com/favicon.ico',
+    '即梦视频': 'https://jimeng.jianying.com/favicon.ico',
+    '通义万象视频': 'https://wanxiang.aliyun.com/favicon.ico',
+    '快影AI': 'https://api.dicebear.com/7.x/initials/svg?seed=快影&backgroundColor=3b82f6',
+    '必剪AI': 'https://bcut.bilibili.cn/favicon.ico',
+    'Virbo': 'https://virbo.wondershare.cn/favicon.ico',
+    'ZeroCut AI': 'https://api.dicebear.com/7.x/initials/svg?seed=ZeroCut&backgroundColor=6366f1',
+    '有言': 'https://www.youyan3d.com/favicon.ico',
+    '快剪辑': 'https://api.dicebear.com/7.x/initials/svg?seed=快剪辑&backgroundColor=14b8a6',
+    '度加': 'https://dujia.baidu.com/favicon.ico',
+    'D-human数字人': 'https://www.d-human.cn/favicon.ico',
+    '快转字幕': 'https://www.kzzimu.com/favicon.ico',
+    '来画': 'https://laihua.com/favicon.ico',
+    '象寄翻译': 'https://www.xiangjifanyi.com/favicon.ico',
+    '万彩AI': 'https://ai.kezhan365.com/favicon.ico',
+    '鬼手剪辑': 'https://cn.jollytoday.com/favicon.ico',
+    'VAS视频加字幕': 'https://www.vaszimu.com/favicon.ico',
+    '一起剪': 'https://api.dicebear.com/7.x/initials/svg?seed=一起剪&backgroundColor=14b8a6',
+    '知作': 'https://hd.zizo.pro/favicon.ico',
+    '33字幕': 'https://www.33subs.com/favicon.ico',
+    '闪剪': 'https://shanjian.tv/favicon.ico',
+    'wink': 'https://wink.cn/favicon.ico',
+    '大饼AI变声': 'https://api.dicebear.com/7.x/initials/svg?seed=大饼&backgroundColor=3b82f6',
+    '讯飞智作': 'https://zhizuo.xfyun.cn/favicon.ico',
+    '网易天音': 'https://tianyin.163.com/favicon.ico',
+    '呱呱有声': 'https://api.dicebear.com/7.x/initials/svg?seed=呱呱&backgroundColor=14b8a6',
+    '标贝悦读': 'https://api.dicebear.com/7.x/initials/svg?seed=标贝&backgroundColor=6366f1',
+    '团子AI': 'https://api.dicebear.com/7.x/initials/svg?seed=团子&backgroundColor=ec4899',
+    '音子AI': 'https://api.dicebear.com/7.x/initials/svg?seed=音子&backgroundColor=8b5cf6',
+    '歌词生成': 'https://geci.sogou.com/favicon.ico',
+    '网易云音乐·X-Studio': 'https://music.163.com/favicon.ico',
+    'MotionSound': 'https://api.dicebear.com/7.x/initials/svg?seed=MotionSound&backgroundColor=ef4444',
+    'ElevenLabs': 'https://elevenlabs.io/favicon.ico',
+    'Suno': 'https://www.suno.cn/favicon.ico',
+    '讯飞配音': 'https://peiyin.xunfei.cn/favicon.ico',
+    '逗哥配音': 'https://www.douge.com/favicon.ico',
+    '海螺AI': 'https://hailuoai.com/favicon.ico',
+    '智声云配': 'https://dubbingx.com/favicon.ico',
+    'SongGenerator': 'https://huggingface.co/favicon.ico',
+    '魔音工坊': 'https://www.moyin.com/favicon.ico',
+    'Mureka': 'https://mureka.ai/favicon.ico',
+    'AnyVoice': 'https://anyvoice.cn/favicon.ico',
+    'TTSOpenAI': 'https://api.dicebear.com/7.x/initials/svg?seed=TTSOpenAI&backgroundColor=6366f1',
+    'Noiz AI': 'https://api.dicebear.com/7.x/initials/svg?seed=Noiz&backgroundColor=8b5cf6',
+    'Speechma': 'https://api.dicebear.com/7.x/initials/svg?seed=Speechma&backgroundColor=22c55e',
+    'Fish Audio': 'https://fish.audio/favicon.ico',
+    '讯飞听见': 'https://www.iflyrec.com/favicon.ico',
+    '刺鸟配音': 'https://api.dicebear.com/7.x/initials/svg?seed=刺鸟&backgroundColor=f59e0b',
+    '蓝藻AI': 'https://api.dicebear.com/7.x/initials/svg?seed=蓝藻&backgroundColor=3b82f6',
+    'BGM猫': 'https://api.dicebear.com/7.x/initials/svg?seed=BGM猫&backgroundColor=ec4899',
+    '快快字幕': 'https://api.dicebear.com/7.x/initials/svg?seed=快快字幕&backgroundColor=14b8a6',
+    '悦音配音': 'https://api.dicebear.com/7.x/initials/svg?seed=悦音&backgroundColor=6366f1',
+    '音虫': 'https://api.dicebear.com/7.x/initials/svg?seed=音虫&backgroundColor=8b5cf6',
+    '通义听悟': 'https://tingwu.aliyun.com/favicon.ico',
+    'TTSMaker': 'https://ttsmaker.com/favicon.ico',
+    'WellSaid Labs': 'https://wellsaidlabs.com/favicon.ico',
+    'GitHub Copilot': 'https://github.com/favicon.ico',
+    'Cursor': 'https://cursor.sh/favicon.ico',
+    '通义灵码': 'https://lingma.aliyun.com/favicon.ico',
+    'Figma AI': 'https://www.figma.com/favicon.ico',
+    'Canva可画': 'https://www.canva.com/favicon.ico',
+    '稿定设计': 'https://www.gaoding.com/favicon.ico',
+    'LinkFox AI': 'https://linkfox.ai/favicon.ico',
+    '创客贴AI': 'https://chuangkit.com/favicon.ico',
+    '炼丹家AI': 'https://api.dicebear.com/7.x/initials/svg?seed=炼丹&backgroundColor=ef4444',
+    'A1.art': 'https://a1.art/favicon.ico',
+    'Civitai': 'https://civitai.com/favicon.ico',
+    'Freepik AI Image': 'https://freepik.com/favicon.ico',
+    'Remove.bg': 'https://remove.bg/favicon.ico',
+    'Ideogram': 'https://ideogram.ai/favicon.ico',
+    'Ribbet.ai': 'https://api.dicebear.com/7.x/initials/svg?seed=Ribbet&backgroundColor=14b8a6',
+    '超能画布': 'https://api.dicebear.com/7.x/initials/svg?seed=超能画布&backgroundColor=3b82f6',
+    'Bing Image Creator': 'https://microsoft.com/favicon.ico',
+    'PhotoRoom': 'https://photoroom.com/favicon.ico',
+    'PicWish': 'https://picwish.com/favicon.ico',
+    'PhotoStudio AI': 'https://api.dicebear.com/7.x/initials/svg?seed=PhotoStudio&backgroundColor=8b5cf6',
+    '星流AI': 'https://api.dicebear.com/7.x/initials/svg?seed=星流&backgroundColor=6366f1',
+    '通义万相': 'https://tongyi.aliyun.com/wan/favicon.ico',
+    '光子AI': 'https://api.dicebear.com/7.x/initials/svg?seed=光子&backgroundColor=f59e0b',
+    '潮际好麦': 'https://api.dicebear.com/7.x/initials/svg?seed=潮际&backgroundColor=14b8a6',
+    '妙思': 'https://api.dicebear.com/7.x/initials/svg?seed=妙思&backgroundColor=3b82f6',
+    '千鹿AI': 'https://api.dicebear.com/7.x/initials/svg?seed=千鹿&backgroundColor=ec4899',
+    '绘蛙': 'https://api.dicebear.com/7.x/initials/svg?seed=绘蛙&backgroundColor=22c55e',
+    '匹紫AI': 'https://api.dicebear.com/7.x/initials/svg?seed=匹紫&backgroundColor=8b5cf6',
+    'Pippit AI': 'https://api.dicebear.com/7.x/initials/svg?seed=Pippit&backgroundColor=ef4444',
+    '即创': 'https://api.dicebear.com/7.x/initials/svg?seed=即创&backgroundColor=14b8a6',
+    'Perplexity': 'https://www.perplexity.ai/favicon.ico',
+    '秘塔搜索': 'https://suo.metasota.cn/favicon.ico',
+    'Semantic Scholar': 'https://www.semanticscholar.org/favicon.ico',
+    'Miku AI': 'https://api.dicebear.com/7.x/initials/svg?seed=Miku&backgroundColor=ec4899',
+    'Reddoo': 'https://api.dicebear.com/7.x/initials/svg?seed=Reddoo&backgroundColor=ef4444',
+    '链企AI': 'https://api.dicebear.com/7.x/initials/svg?seed=链企&backgroundColor=3b82f6',
+    '开搜AI': 'https://api.dicebear.com/7.x/initials/svg?seed=开搜&backgroundColor=14b8a6',
+    '悟空AI搜索': 'https://api.dicebear.com/7.x/initials/svg?seed=悟空搜索&backgroundColor=f59e0b',
+    '心流': 'https://api.dicebear.com/7.x/initials/svg?seed=心流&backgroundColor=6366f1',
+    '百度AI搜索版': 'https://ai.baidu.com/favicon.ico',
+
+    '智谱清言插件': 'https://chatglm.cn/favicon.ico',
+    '移塔AI搜索': 'https://api.dicebear.com/7.x/initials/svg?seed=移塔&backgroundColor=8b5cf6',
+    'Tabbit': 'https://api.dicebear.com/7.x/initials/svg?seed=Tabbit&backgroundColor=22c55e',
+    'Dia': 'https://api.dicebear.com/7.x/initials/svg?seed=Dia&backgroundColor=3b82f6',
+    'Fellou': 'https://api.dicebear.com/7.x/initials/svg?seed=Fellou&backgroundColor=ef4444',
+    '笔灵AI小说': 'https://api.dicebear.com/7.x/initials/svg?seed=笔灵&backgroundColor=6366f1',
+    '星月写作': 'https://api.dicebear.com/7.x/initials/svg?seed=星月&backgroundColor=8b5cf6',
+    '蛙蛙写作': 'https://api.dicebear.com/7.x/initials/svg?seed=蛙蛙&backgroundColor=14b8a6',
+    '必火AI': 'https://api.dicebear.com/7.x/initials/svg?seed=必火&backgroundColor=ef4444',
+    '哩布哩布AI': 'https://www.liblib.art/favicon.ico',
+    'AiPPT': 'https://aippt.cn/favicon.ico',
+    '博思AIPPT': 'https://api.dicebear.com/7.x/initials/svg?seed=博思&backgroundColor=3b82f6',
+    '扣子': 'https://coze.cn/favicon.ico',
+    '爱派AiPy': 'https://api.dicebear.com/7.x/initials/svg?seed=AiPy&backgroundColor=14b8a6',
+    '秒哒': 'https://miaoda.baidu.com/favicon.ico',
+    'TRAE编程': 'https://trae.io/favicon.ico',
+    'PromptPilot': 'https://api.dicebear.com/7.x/initials/svg?seed=PromptPilot&backgroundColor=6366f1',
+    'Learn Prompting': 'https://learnprompting.org/favicon.ico',
+    'ImagePrompt': 'https://api.dicebear.com/7.x/initials/svg?seed=ImagePrompt&backgroundColor=ec4899',
+    'Public Prompts': 'https://api.dicebear.com/7.x/initials/svg?seed=PublicPrompts&backgroundColor=22c55e',
+    'Snack Prompt': 'https://snackprompt.com/favicon.ico',
+    'AIPRM': 'https://aiprm.com/favicon.ico',
+    'Visual Prompt': 'https://api.dicebear.com/7.x/initials/svg?seed=VisualPrompt&backgroundColor=8b5cf6',
+    'PromptFolder': 'https://promptfolder.com/favicon.ico',
+    'PromptBase': 'https://promptbase.com/favicon.ico',
+    'WorkMind.AI': 'https://api.dicebear.com/7.x/initials/svg?seed=WorkMind&backgroundColor=3b82f6',
+    'prompts.chat': 'https://prompts.chat/favicon.ico',
+    'Learning Prompt': 'https://api.dicebear.com/7.x/initials/svg?seed=LearningPrompt&backgroundColor=14b8a6',
+    'AI Short': 'https://api.dicebear.com/7.x/initials/svg?seed=AIShort&backgroundColor=ef4444',
+    '绘AI': 'https://api.dicebear.com/7.x/initials/svg?seed=绘AI&backgroundColor=6366f1',
+    '词魂': 'https://api.dicebear.com/7.x/initials/svg?seed=词魂&backgroundColor=8b5cf6',
+    'AI Wind': 'https://api.dicebear.com/7.x/initials/svg?seed=AIWind&backgroundColor=22c55e',
+    'Local Banana': 'https://api.dicebear.com/7.x/initials/svg?seed=LocalBanana&backgroundColor=f59e0b',
+    'Kalos Art Lib': 'https://lib.kalos.art/favicon.ico',
+    '阿里云 AI 服务': 'https://www.aliyun.com/favicon.ico',
+    '火山引擎 AI 服务': 'https://www.volcengine.com/favicon.ico',
+    'Token代理项目': 'https://www.aliyun.com/favicon.ico',
+    'ChatGPT Plus': 'https://openai.com/favicon.ico',
+    'GPT-4o': 'https://openai.com/favicon.ico',
+    'Bard': 'https://bard.google.com/favicon.ico',
+    'LLaMA': 'https://meta.ai/favicon.ico',
+    'Mistral': 'https://mistral.ai/favicon.ico',
+    'Mixtral': 'https://mistral.ai/favicon.ico',
+    'Stable Diffusion XL': 'https://stability.ai/favicon.ico',
+    'ControlNet': 'https://github.com/favicon.ico',
+    'Lensa': 'https://api.dicebear.com/7.x/initials/svg?seed=Lensa&backgroundColor=8b5cf6',
+    'FaceApp': 'https://www.faceapp.com/favicon.ico',
+    'Descript': 'https://www.descript.com/favicon.ico',
+    'Synthesia': 'https://www.synthesia.io/favicon.ico',
+    'DeepFaceLab': 'https://github.com/favicon.ico',
+    'Podcast.ai': 'https://api.dicebear.com/7.x/initials/svg?seed=Podcast&backgroundColor=14b8a6',
+    'Descript Voice': 'https://www.descript.com/favicon.ico',
+    'Voice.ai': 'https://voice.ai/favicon.ico',
+    'Tabnine': 'https://www.tabnine.com/favicon.ico',
+    'Codeium': 'https://codeium.com/favicon.ico',
+    'Replit AI': 'https://replit.com/favicon.ico',
+    'Adobe Firefly': 'https://www.adobe.com/favicon.ico',
+    'PicsArt': 'https://picsart.com/favicon.ico',
+    'Snapseed': 'https://api.dicebear.com/7.x/initials/svg?seed=Snapseed&backgroundColor=22c55e',
+    'Bing AI': 'https://www.bing.com/favicon.ico',
+    'Google SGE': 'https://www.google.com/favicon.ico',
+    'You.com': 'https://you.com/favicon.ico',
+    'NovelAI': 'https://novelai.net/favicon.ico',
+    'AI Dungeon': 'https://aidungeon.io/favicon.ico',
+    'Character.AI': 'https://character.ai/favicon.ico',
+    'Runway Gen-2': 'https://runwayml.com/favicon.ico',
+    'Kaiber': 'https://api.dicebear.com/7.x/initials/svg?seed=Kaiber&backgroundColor=6366f1',
+    'Steve AI': 'https://www.steve.ai/favicon.ico',
+    'Soundful': 'https://soundful.com/favicon.ico',
+    'AIVA': 'https://www.aiva.ai/favicon.ico',
+    'Amper Music': 'https://api.dicebear.com/7.x/initials/svg?seed=Amper&backgroundColor=ec4899',
+    'GitHub Copilot X': 'https://github.com/favicon.ico',
+    'Sourcegraph Cody': 'https://sourcegraph.com/favicon.ico',
+    'AWS CodeWhisperer': 'https://aws.amazon.com/favicon.ico',
+    'Figma Auto Layout': 'https://www.figma.com/favicon.ico',
+    'Canva Magic Design': 'https://www.canva.com/favicon.ico',
+    'Tailwind CSS AI': 'https://tailwindcss.com/favicon.ico',
+    'Kagi': 'https://kagi.com/favicon.ico',
+    'Jasper': 'https://www.jasper.ai/favicon.ico',
+    'Copy.ai': 'https://www.copy.ai/favicon.ico',
+    'Writesonic': 'https://writesonic.com/favicon.ico',
+    'Elai.io': 'https://elai.io/favicon.ico',
+    'Gamma': 'https://gamma.app/favicon.ico',
+    'Tome': 'https://tome.app/favicon.ico',
+    'Beautiful.ai': 'https://www.beautiful.ai/favicon.ico',
+    'AutoGPT': 'https://github.com/favicon.ico',
+    'BabyAGI': 'https://github.com/favicon.ico',
+    'GPT-Engineer': 'https://github.com/favicon.ico',
+    'Perplexity Pro': 'https://www.perplexity.ai/favicon.ico',
+    'Kimi Pro': 'https://kimi.moonshot.cn/favicon.ico',
+    'Claude Pro': 'https://www.anthropic.com/favicon.ico',
+    'Gemini Advanced': 'https://gemini.google.com/favicon.ico',
+    'Midjourney Pro': 'https://www.midjourney.com/favicon.ico',
+    'Runway Pro': 'https://runwayml.com/favicon.ico',
+    'ElevenLabs Pro': 'https://elevenlabs.io/favicon.ico',
+    'GitHub Copilot Pro': 'https://github.com/favicon.ico',
+    'Figma Pro': 'https://www.figma.com/favicon.ico',
+    'Canva Pro': 'https://www.canva.com/favicon.ico',
+    '笔灵AI论文': 'https://bilingai.com/favicon.ico',
+    '66AI论文': 'https://66ai.lunwen.com/favicon.ico',
+    '巧文书': 'https://qiaowenshu.com/favicon.ico',
+    '讯飞绘文': 'https://huiwen.xfyun.cn/favicon.ico',
+    '极梦数字人': 'https://jimeng.jianying.com/favicon.ico',
+    '剪映数字人': 'https://www.capcut.cn/favicon.ico',
+    '有言AI': 'https://www.youyan3d.com/favicon.ico',
+    'JoggAI': 'https://api.dicebear.com/7.x/initials/svg?seed=JoggAI&backgroundColor=3b82f6',
+    'Joypix': 'https://api.dicebear.com/7.x/initials/svg?seed=Joypix&backgroundColor=f59e0b',
+    '妙播': 'https://api.dicebear.com/7.x/initials/svg?seed=妙播&backgroundColor=8b5cf6',
+    '蝉镜': 'https://api.dicebear.com/7.x/initials/svg?seed=蝉镜&backgroundColor=ec4899',
+    '飞影数字人': 'https://api.dicebear.com/7.x/initials/svg?seed=飞影&backgroundColor=6366f1',
+    'Liblib TV': 'https://www.liblib.art/favicon.ico',
+    'AI漫剧生成器': 'https://api.dicebear.com/7.x/initials/svg?seed=漫剧&backgroundColor=ef4444',
+    '漫剧AI': 'https://api.dicebear.com/7.x/initials/svg?seed=漫剧AI&backgroundColor=f59e0b',
+    'AI漫画生成': 'https://api.dicebear.com/7.x/initials/svg?seed=漫画&backgroundColor=8b5cf6',
+    'Comic AI': 'https://api.dicebear.com/7.x/initials/svg?seed=ComicAI&backgroundColor=22c55e',
+    '漫剧生成AI': 'https://api.dicebear.com/7.x/initials/svg?seed=漫剧生成&backgroundColor=3b82f6',
+    '天工短剧工作台': 'https://tiangong.ai/favicon.ico',
+    'AniShort': 'https://api.dicebear.com/7.x/initials/svg?seed=AniShort&backgroundColor=ef4444',
+    // 补充缺少的官方logo
+    'AutoGLM沉思': 'https://zhipuai.cn/favicon.ico',
+    'FlowAI': 'https://api.dicebear.com/7.x/initials/svg?seed=FlowAI&backgroundColor=3b82f6',
+    'Flowith': 'https://api.dicebear.com/7.x/initials/svg?seed=Flowith&backgroundColor=8b5cf6',
+    'Genspark': 'https://genspark.ai/favicon.ico',
+    'Hailuo Video': 'https://hailuoai.com/favicon.ico',
+    'Jarvis': 'https://api.dicebear.com/7.x/initials/svg?seed=Jarvis&backgroundColor=f59e0b',
+    'Lovart': 'https://api.dicebear.com/7.x/initials/svg?seed=Lovart&backgroundColor=ec4899',
+    'MGX': 'https://api.dicebear.com/7.x/initials/svg?seed=MGX&backgroundColor=6366f1',
+    'Manus': 'https://manus.ai/favicon.ico',
+    'MasterAgent AI': 'https://api.dicebear.com/7.x/initials/svg?seed=MasterAgent&backgroundColor=14b8a6',
+    'MiniMax Agent': 'https://minimax.chat/favicon.ico',
+    'NoCode': 'https://nocode.cn/favicon.ico',
+    'OpenClaw': 'https://api.dicebear.com/7.x/initials/svg?seed=OpenClaw&backgroundColor=22c55e',
+
+    'Kimi Claw': 'https://kimi.moonshot.cn/favicon.ico',
+    'ArkClaw': 'https://www.volcengine.com/favicon.ico',
+    '悟空': 'https://wukong.ai/favicon.ico',
+    'MaxClaw': 'https://minimax.chat/favicon.ico',
+    'NemoClaw': 'https://nvidia.com/favicon.ico',
+    '牛马 AI': 'https://api.dicebear.com/7.x/initials/svg?seed=牛马AI&backgroundColor=f59e0b',
+    'Linkfox Claw': 'https://linkfox.ai/favicon.ico',
+    'LobsterAI 有道龙虾': 'https://api.dicebear.com/7.x/initials/svg?seed=龙虾&backgroundColor=f59e0b',
+    'AutoClaw': 'https://zhipuai.cn/favicon.ico',
+    'JVS Claw': 'https://api.dicebear.com/7.x/initials/svg?seed=JVS&backgroundColor=3b82f6',
+    'CoPaw': 'https://api.dicebear.com/7.x/initials/svg?seed=CoPaw&backgroundColor=8b5cf6',
+    'EasyClaw': 'https://api.dicebear.com/7.x/initials/svg?seed=EasyClaw&backgroundColor=10b981',
+    'Qclaw': 'https://qq.com/favicon.ico',
+    'Operator': 'https://openai.com/favicon.ico',
+    'RabbitOS': 'https://api.dicebear.com/7.x/initials/svg?seed=RabbitOS&backgroundColor=ef4444',
+    'Skywork': 'https://skywork.ai/favicon.ico',
+    'Suna': 'https://suna.ai/favicon.ico',
+    'WorkBuddy': 'https://codebuddy.cn/favicon.ico',
+    '悟空智能体': 'https://api.dicebear.com/7.x/initials/svg?seed=悟空&backgroundColor=f59e0b',
+    '智谱CoCo': 'https://chatglm.cn/favicon.ico',
+    '灵码IDE': 'https://aliyun.com/favicon.ico',
+    '金灵AI': 'https://api.dicebear.com/7.x/initials/svg?seed=金灵&backgroundColor=f59e0b',
+    '阿里智能体': 'https://aliyun.com/favicon.ico',
+    
+    // 补充更多官方logo - 使用真实官网域名
+    '快影AI': 'https://www.kuaishou.com/favicon.ico',
+    '必剪AI': 'https://bcut.bilibili.cn/favicon.ico',
+    'wink': 'https://wink.cn/favicon.ico',
+    '团子AI': 'https://dango.ai/favicon.ico',
+    '蝉镜': 'https://www.chanjing.cc/favicon.ico',
+    '哩布哩布AI': 'https://www.liblib.art/favicon.ico',
+    'Liblib TV': 'https://www.liblib.tv/favicon.ico',
+    'JoggAI': 'https://www.jogg.ai/favicon.ico',
+    'Kaiber': 'https://kaiber.ai/favicon.ico',
+    'Lensa': 'https://lensa.app/favicon.ico',
+    'Amper Music': 'https://ampermusic.com/favicon.ico',
+    'CrewAI': 'https://www.crewai.com/favicon.ico',
+    'LangChain': 'https://www.langchain.com/favicon.ico',
+    'AgentGPT': 'https://reworkd.ai/favicon.ico',
+    'Lovart': 'https://lovart.ai/favicon.ico',
+    'Skywork': 'https://skywork.ai/favicon.ico',
+    'Suna': 'https://suna.so/favicon.ico',
+    'Genspark': 'https://genspark.ai/favicon.ico',
+    'Flowith': 'https://flowith.com/favicon.ico',
+    '扣子': 'https://www.coze.cn/favicon.ico',
+    '博思AIPPT': 'https://pptgo.com/favicon.ico',
+    
+    // 视频工具
+    '醒图AI': 'https://www.retouchpics.com/favicon.ico',
+    'ZeroCut AI': 'https://zerocut.ai/favicon.ico',
+    '快剪辑': 'https://kuaijianji.com/favicon.ico',
+    'D-human数字人': 'https://www.d-human.cn/favicon.ico',
+    '快转字幕': 'https://www.kzzimu.com/favicon.ico',
+    '象寄翻译': 'https://www.xiangjifanyi.com/favicon.ico',
+    '万彩AI': 'https://ai.kezhan365.com/favicon.ico',
+    '鬼手剪辑': 'https://cn.jollytoday.com/favicon.ico',
+    'VAS视频加字幕': 'https://www.vaszimu.com/favicon.ico',
+    '一起剪': 'https://yiqijian.com/favicon.ico',
+    '知作': 'https://hd.zizo.pro/favicon.ico',
+    '33字幕': 'https://www.33subs.com/favicon.ico',
+    '闪剪': 'https://shanjian.tv/favicon.ico',
+    
+    // 音频工具
+    
+    '逗哥配音': 'https://www.douge.com/favicon.ico',
+    '智声云配': 'https://dubbingx.com/favicon.ico',
+    'SongGenerator': 'https://huggingface.co/favicon.ico',
+    'AnyVoice': 'https://anyvoice.cn/favicon.ico',
+    'TTSOpenAI': 'https://ttsopenai.com/favicon.ico',
+    'Noiz AI': 'https://noiz.ai/favicon.ico',
+    'Speechma': 'https://speechma.com/favicon.ico',
+    '刺鸟配音': 'https://cibirdpeiyin.com/favicon.ico',
+    '蓝藻AI': 'https://lanzhaoai.com/favicon.ico',
+    'BGM猫': 'https://bgmcat.com/favicon.ico',
+    '大饼AI变声': 'https://dabingai.com/favicon.ico',
+    '呱呱有声': 'https://guaguayousheng.com/favicon.ico',
+    '标贝悦读': 'https://yuedu.data-baker.com/favicon.ico',
+    '音子AI': 'https://yinzi.ai/favicon.ico',
+    'MotionSound': 'https://motionsound.com/favicon.ico',
+    '快快字幕': 'https://kuaikuaizimu.com/favicon.ico',
+    '悦音配音': 'https://yueyinpeiyin.com/favicon.ico',
+    '音虫': 'https://yincong.com/favicon.ico',
+    '炼丹家AI': 'https://liandan.ai/favicon.ico',
+    'Ribbet.ai': 'https://ribbet.ai/favicon.ico',
+    '超能画布': 'https://chaonenghuabu.com/favicon.ico',
+    'PhotoStudio AI': 'https://photostudio.ai/favicon.ico',
+    '星流AI': 'https://xingliu.ai/favicon.ico',
+    '光子AI': 'https://guangzi.ai/favicon.ico',
+    
+    // 设计工具
+    '潮际好麦': 'https://chaojihaomai.com/favicon.ico',
+    '妙思': 'https://miaosi.com/favicon.ico',
+    '千鹿AI': 'https://qianlu.ai/favicon.ico',
+    '绘蛙': 'https://huiwa.ai/favicon.ico',
+    '匹紫AI': 'https://pizi.ai/favicon.ico',
+    'Pippit AI': 'https://pippit.ai/favicon.ico',
+    '即创': 'https://jichuang.com/favicon.ico',
+    
+    // 搜索工具
+    'Miku AI': 'https://miku.ai/favicon.ico',
+    'Reddoo': 'https://reddoo.com/favicon.ico',
+    '链企AI': 'https://lianqi.ai/favicon.ico',
+    '开搜AI': 'https://kaisou.ai/favicon.ico',
+    '悟空AI搜索': 'https://wukong.ai/favicon.ico',
+    '心流': 'https://xinliu.ai/favicon.ico',
+    '移塔AI搜索': 'https://yita.ai/favicon.ico',
+    'Tabbit': 'https://tabbit.ai/favicon.ico',
+    'Dia': 'https://dia.ai/favicon.ico',
+    'Fellou': 'https://fellou.ai/favicon.ico',
+    
+    // 小说工具
+    '笔灵AI小说': 'https://bilingai.com/favicon.ico',
+    '星月写作': 'https://xingyue.ai/favicon.ico',
+    '蛙蛙写作': 'https://wawa.ai/favicon.ico',
+    '必火AI': 'https://bihuo.ai/favicon.ico',
+    '爱派AiPy': 'https://aipy.ai/favicon.ico',
+    
+    // Prompt工具
+    'ImagePrompt': 'https://imageprompt.ai/favicon.ico',
+    'Public Prompts': 'https://publicprompts.ai/favicon.ico',
+    'Visual Prompt': 'https://visualprompt.ai/favicon.ico',
+    'WorkMind.AI': 'https://workmind.ai/favicon.ico',
+    'Learning Prompt': 'https://learningprompt.ai/favicon.ico',
+    'AI Short': 'https://aishort.com/favicon.ico',
+    '绘AI': 'https://hui.ai/favicon.ico',
+    '词魂': 'https://cihun.com/favicon.ico',
+    'AI Wind': 'https://aiwind.org/favicon.ico',
+    'Local Banana': 'https://localbanana.io/favicon.ico',
+    'Lensa': 'https://lensa.ai/favicon.ico',
+    'Snapseed': 'https://snapseed.app/favicon.ico',
+    'Podcast.ai': 'https://podcast.ai/favicon.ico',
+    'Amper Music': 'https://ampermusic.com/favicon.ico',
+    'Kaiber': 'https://kaiber.ai/favicon.ico',
+    'JoggAI': 'https://joggai.com/favicon.ico',
+    'Joypix': 'https://joypix.ai/favicon.ico',
+    '妙播': 'https://miaobo.ai/favicon.ico',
+    '蝉镜': 'https://chanjing.ai/favicon.ico',
+    '飞影数字人': 'https://feiying.ai/favicon.ico',
+    'Liblib TV': 'https://liblib.art/favicon.ico',
+    'AI漫剧生成器': 'https://aimanju.com/favicon.ico',
+    '漫剧AI': 'https://manju.ai/favicon.ico',
+    'AI漫画生成': 'https://aimanhua.com/favicon.ico',
+    'Comic AI': 'https://comic.ai/favicon.ico',
+    '漫剧生成AI': 'https://manjushengcheng.com/favicon.ico',
+    'AniShort': 'https://anishort.ai/favicon.ico',
+    'FlowAI': 'https://flowai.com/favicon.ico',
+    'Flowith': 'https://flowith.com/favicon.ico',
+    'Jarvis': 'https://jarvis.ai/favicon.ico',
+    'Lovart': 'https://lovart.ai/favicon.ico',
+    'MGX': 'https://mgx.ai/favicon.ico',
+    'MasterAgent AI': 'https://masteragent.ai/favicon.ico',
+    'OpenClaw': 'https://openclaw.ai/favicon.ico',
+    'JVS Claw': 'https://jvsclaw.com/favicon.ico',
+    'CoPaw': 'https://copaw.com/favicon.ico',
+    'EasyClaw': 'https://easyclaw.com/favicon.ico',
+    '牛马 AI': 'https://niuma.ai/favicon.ico',
+    'LobsterAI 有道龙虾': 'https://lobsterai.com/favicon.ico',
+    'Claude Code': 'https://claude.ai/favicon.ico',
+    '讯飞星辰Agent': 'https://xingchen.xfyun.cn/favicon.ico',
+    'MiniMax Agent': 'https://minimax.chat/favicon.ico',
+    'Genspark': 'https://genspark.ai/favicon.ico',
+    'Operator': 'https://operator.ai/favicon.ico',
+    'RabbitOS': 'https://rabbitos.ai/favicon.ico',
+    'Skywork': 'https://skywork.ai/favicon.ico',
+    'Suna': 'https://suna.ai/favicon.ico',
+    '悟空智能体': 'https://wukong.ai/favicon.ico',
+    '金灵AI': 'https://jinling.ai/favicon.ico',
+    
+    // 补充最后几个缺少的logo
+    'AgentGPT': 'https://reworkd.ai/favicon.ico',
+    'CrewAI': 'https://crewai.com/favicon.ico',
+    'LangChain': 'https://langchain.com/favicon.ico',
+    'PromptPilot': 'https://promptpilot.ai/favicon.ico',
+    'Trae': 'https://www.trae.cn/favicon.ico'
+  };
+
+  // 2. 手动配置有则返回，无则用第三方CDN自动获取
+  if (logoMap[toolName]) {
+    // 直接使用手动配置的URL，不做转换
+    return logoMap[toolName];
+  }
+
+  // 尝试多种favicon获取方法
+  try {
+    const url = new URL(toolUrl);
+    const domain = url.hostname;
+    
+    // 多层fallback：优先使用专业logo服务
+    // 1. Clearbit Logo API - 专业公司logo，质量最高
+    // 2. DuckDuckGo Favicon - 支持CORS，较稳定
+    // 3. Icon Horse - 自动处理fallback
+    // 4. Google S2 - 最后兜底
+    return `https://logo.clearbit.com/${domain}?size=64`;
+  } catch (e) {
+    // fallback：使用 DiceBear 生成首字母图标
+    return `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(toolName)}&backgroundColor=5967f3&fontSize=40`;
+  }
+}
+
+// Logo fallback链 - 按优先级依次尝试
+function getNextLogoSrc(currentSrc, toolName, toolUrl) {
+  // 如果当前是手动配置的favicon.ico，切换到CDN服务
+  if (currentSrc.includes('favicon.ico')) {
+    try {
+      const domain = new URL(toolUrl).hostname;
+      // 先尝试 DuckDuckGo
+      return `https://icons.duckduckgo.com/ip3/${domain}.ico`;
+    } catch (e) {}
+  }
+  
+  // CDN服务fallback链
+  try {
+    const domain = new URL(toolUrl).hostname;
+    const sources = [
+      `https://logo.clearbit.com/${domain}?size=64`,
+      `https://icons.duckduckgo.com/ip3/${domain}.ico`,
+      `https://icon.horse/icon/${domain}?size=medium`,
+      `https://www.google.com/s2/favicons?domain=${domain}&sz=64`
+    ];
+    
+    const currentIndex = sources.findIndex(s => currentSrc.includes(s.split('?')[0]));
+    if (currentIndex >= 0 && currentIndex < sources.length - 1) {
+      return sources[currentIndex + 1];
+    }
+  } catch (e) {}
+  
+  // 最终fallback：DiceBear首字母
+  return `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(toolName || 'AI')}&backgroundColor=5967f3&fontSize=40`;
+}
+
+// 为图片添加错误处理，自动切换到下一个logo源
+function addImageErrorHandlers() {
+  const images = document.querySelectorAll('img');
+  images.forEach(img => {
+    if (img.hasAttribute('data-error-handled')) return;
+    img.setAttribute('data-error-handled', 'true');
+    
+    img.onerror = function() {
+      const toolName = this.alt;
+      const toolUrl = this.getAttribute('data-tool-url') || '';
+      const currentSrc = this.src;
+      
+      // 获取下一个fallback源
+      const nextSrc = getNextLogoSrc(currentSrc, toolName, toolUrl);
+      this.src = nextSrc;
+      
+      // 如果已经是DiceBear了，停止错误处理
+      if (nextSrc.includes('dicebear')) {
+        this.onerror = null;
+      }
+    };
+  });
+}
+
+// 页面加载完成后添加错误处理
+window.addEventListener('load', addImageErrorHandlers);
+
+let cat = "";
+let tag = "";
+let favMode = false;
+
+// 收藏功能
+function getFav(){ return JSON.parse(localStorage.getItem("fav")||"[]"); }
+function toggleFav(n){ let f=getFav(); let i=f.indexOf(n); i==-1?f.push(n):f.splice(i,1); localStorage.setItem("fav",JSON.stringify(f)); render(); }
+function filter(c,t){cat=c;tag=t;favMode=false;render();updateMobileNav();}
+function showFav(){favMode=true;render();updateMobileNav();}
+
+// 更新移动端底部导航栏高亮状态
+function updateMobileNav() {
+  const navButtons = document.querySelectorAll('#mobileNav button');
+  navButtons.forEach(btn => {
+    btn.classList.remove('text-primary');
+    btn.classList.add('text-gray-500');
+  });
+  
+  if (favMode) {
+    const favBtn = document.querySelector('#mobileNav button:last-child');
+    favBtn.classList.remove('text-gray-500');
+    favBtn.classList.add('text-primary');
+  } else if (cat === 'all' || cat === '') {
+    const allBtn = document.querySelector('#mobileNav button:first-child');
+    allBtn.classList.remove('text-gray-500');
+    allBtn.classList.add('text-primary');
+  } else if (cat === 'write') {
+    const writeBtn = document.querySelector('#mobileNav button:nth-child(2)');
+    writeBtn.classList.remove('text-gray-500');
+    writeBtn.classList.add('text-primary');
+  } else if (cat === 'img') {
+    const imgBtn = document.querySelector('#mobileNav button:nth-child(3)');
+    imgBtn.classList.remove('text-gray-500');
+    imgBtn.classList.add('text-primary');
+  } else if (cat === 'video') {
+    const videoBtn = document.querySelector('#mobileNav button:nth-child(4)');
+    videoBtn.classList.remove('text-gray-500');
+    videoBtn.classList.add('text-primary');
+  }
+}
+
+// 转义特殊字符，防止XSS
+function escapeAttr(str) {
+  return str.replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// 渲染工具：全官方LOGO，纯专业导航
+function render(){
+  const s = document.getElementById("search").value.toLowerCase();
+  let list = favMode ? tools.filter(i=>getFav().includes(i.name)) : tools.filter(i=>{
+    const m = (cat!=='all'&&cat?i.c==cat:true)&&(tag?i[tag]:true);
+    return m&&(!s||i.name.toLowerCase().includes(s));
+  });
+  
+  document.getElementById("list").innerHTML = list.map((i, index)=>{
+    const safeName = escapeAttr(i.name);
+    const safeUrl = escapeAttr(i.u);
+    return `
+  <a href="${safeUrl}" target="_blank" class="tool-card glass-card rounded-2xl p-5 border border-gray-200/50 dark:border-dark-300/50 relative cursor-pointer group block" style="--index: ${index}">
+    <button onclick="toggleFav('${safeName}');event.preventDefault();event.stopPropagation()" class="absolute top-3 right-3 text-gray-300/50 hover:text-yellow-400 transition-colors ${getFav().includes(i.name)?'text-yellow-400':''}">
+      <i class="fa-solid fa-star"></i>
+    </button>
+    <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-dark-200 dark:to-dark-300 group-hover:scale-110 transition-transform shadow-sm">
+      <img src="${getToolLogo(i.name, i.u)}" class="w-7 h-7 object-contain" alt="${safeName}" data-tool-url="${i.u}">
+    </div>
+    <h3 class="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">${i.name}</h3>
+    <div class="flex gap-1.5 flex-wrap">
+      ${i.hot?'<span class="px-2 py-0.5 text-xs bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-full">热门</span>':''}
+      ${i.cn?'<span class="px-2 py-0.5 text-xs bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-full">国内</span>':''}
+      <span class="px-2 py-0.5 text-xs bg-gray-100 dark:bg-dark-200 text-gray-500 dark:text-gray-400 rounded-full">${categoryMap[i.c] || 'AI工具'}</span>
+    </div>
+  </a>`;
+  }).join('');
+  
+  setTimeout(addImageErrorHandlers, 100);
+}
+
+// 基础功能
+function toggleDark(){document.documentElement.classList.toggle("dark");}
+function openSubmit(){document.getElementById("modal").style.display="flex";}
+function closeSubmit(){document.getElementById("modal").style.display="none";}
+function submitTool(){alert("提交成功！站长审核后将上线");closeSubmit();}
+function toggleSidebar(){
+  const sidebar = document.getElementById("sidebar");
+  if (sidebar.classList.contains("-translate-x-full")) {
+    sidebar.classList.remove("-translate-x-full");
+  } else {
+    sidebar.classList.add("-translate-x-full");
+  }
+}
+
+// 工具详情页功能
+let currentToolName = '';
+
+// 工具简介映射
+const toolDescriptions = {
+  // AI写作/对话
+  'ChatGPT': 'OpenAI开发的先进对话式AI，可用于各种文本生成任务',
+  '文心一言': '百度开发的智能对话助手，支持多轮对话和内容创作',
+  '豆包': '字节跳动开发的智能对话助手，提供日常对话和创作支持',
+  '通义千问': '阿里云开发的智能对话助手，支持多领域知识问答',
+  'Claude': 'Anthropic开发的AI助手，注重安全性和真实性',
+  'Gemini': 'Google开发的多模态AI模型，支持文本、图像、音频等',
+  'Kimi': '月之暗面开发的智能对话助手，支持长文本理解',
+  '智谱清言': '智谱AI开发的智能对话助手，基于GLM大模型',
+  '讯飞星火': '讯飞开发的智能对话助手，支持多语言和多场景',
+  
+  // AI绘画
+  'Midjourney': '流行的AI图像生成工具，可创建高质量艺术作品',
+  'DALL·E 3': 'OpenAI开发的AI图像生成工具，支持复杂图像创作',
+  'Stable Diffusion': '开源的AI图像生成模型，可用于各种创意创作',
+  '即梦AI': '专业的AI绘画工具，提供多种风格和模板',
+  '醒图AI': '专注于人像修图和美化的AI工具',
+  '美图AI': '美图公司开发的AI图像生成和编辑工具',
+  
+  // AI视频
+  'Runway': '专业的AI视频生成和编辑工具',
+  'Pika': 'AI视频生成工具，可将文本转换为视频',
+  '剪映AI': '剪映开发的AI视频编辑工具，支持智能剪辑',
+  '可灵AI': 'AI视频生成工具，专注于创意视频制作',
+  'Sora 2': 'OpenAI开发的AI视频生成模型，可创建长视频',
+  '即梦视频': '专业的AI视频生成工具，提供多种视频模板',
+  'Virbo': '万兴科技开发的AI数字人生成工具',
+  
+  // AI音频
+  'ElevenLabs': '高质量AI语音合成工具，支持多种语言和声音',
+  'Suno': 'AI音乐生成工具，可创建原创音乐',
+  '讯飞配音': '讯飞开发的AI语音合成工具，支持多种声音',
+  
+  // AI编程
+  'GitHub Copilot': 'GitHub开发的AI代码助手，可自动生成代码',
+  'Cursor': 'AI辅助编程编辑器，提供智能代码建议',
+  
+  // AI设计
+  'Figma AI': 'Figma集成的AI设计助手，可自动生成设计',
+  'Canva可画': 'Canva集成的AI设计工具，提供模板和素材',
+  
+  // AI搜索
+  'Perplexity': 'AI驱动的搜索引擎，提供详细的答案和来源',
+  '秘塔搜索': '专注于学术和专业内容的AI搜索引擎',
+  
+  // AI小说
+  '笔灵AI小说': 'AI辅助小说创作工具，支持情节生成和续写',
+  
+  // AI数字人
+  '必火AI': 'AI数字人生成工具，可创建虚拟形象',
+  
+  // AI PPT
+  'AiPPT': 'AI辅助PPT制作工具，可自动生成演示文稿',
+  
+  // AI Agent
+  '扣子': '字节跳动开发的AI Agent平台，支持多种任务',
+  'OpenClaw': '开源的AI Agent框架，支持本地部署',
+  
+  // AI提示指令
+  'PromptPilot': 'AI提示词管理工具，帮助创建和优化提示词',
+  'Learn Prompting': '提示词学习平台，提供提示词教程和资源',
+  
+  // AI漫剧
+  'AI漫剧生成器': 'AI辅助漫画和动画创作工具',
+  
+  // 推广工具
+  '阿里云 AI 服务': '阿里云提供的AI大模型和云服务',
+  '火山引擎 AI 服务': '字节跳动提供的AI模型和服务平台'
+};
+
+function showToolDetail(name, url, category, hot, cn) {
+  currentToolName = name;
+  document.getElementById('toolDetailName').textContent = name;
+  document.getElementById('toolDetailLogo').src = getToolLogo(name, url);
+  document.getElementById('toolDetailLogo').onerror = function() {
+    this.onerror = null;
+    this.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}`;
+  };
+  document.getElementById('toolDetailCategory').textContent = categoryMap[category] || 'AI工具';
+  document.getElementById('toolDetailLink').href = url;
+  
+  // 生成标签
+  const tagsContainer = document.getElementById('toolDetailTags');
+  tagsContainer.innerHTML = '';
+  if (hot) {
+    const hotTag = document.createElement('span');
+    hotTag.className = 'px-2 text-xs bg-red-100 dark:bg-red-900/30 text-red-500 rounded';
+    hotTag.textContent = '热门';
+    tagsContainer.appendChild(hotTag);
+  }
+  if (cn) {
+    const cnTag = document.createElement('span');
+    cnTag.className = 'px-2 text-xs bg-green-100 dark:bg-green-900/30 text-green-500 rounded';
+    cnTag.textContent = '国内可用';
+    tagsContainer.appendChild(cnTag);
+  }
+  
+  // 显示工具简介
+  const descContainer = document.getElementById('toolDetailDesc');
+  descContainer.textContent = toolDescriptions[name] || '这是一个功能强大的AI工具，为用户提供专业的AI服务。';
+  
+  // 更新收藏按钮状态
+  updateFavButton();
+  
+  // 显示推广信息
+  const promoContainer = document.getElementById('toolDetailPromo');
+  if (category === 'img' || category === 'video') {
+    // 只在视频和绘画工具中显示推广信息
+    promoContainer.innerHTML = `
+      <div class="mt-3 p-2 bg-gray-50 dark:bg-dark-200 rounded-lg border border-gray-200 dark:border-dark-300">
+        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">💡 推荐工具</p>
+        <a href="https://你的阿里云Token推广链接" target="_blank" class="block text-xs text-blue-500 dark:text-blue-400 hover:underline">
+          🔥 阿里云 AI 服务 - 专业的AI模型服务平台
+        </a>
+        <a href="https://你的火山Token推广链接" target="_blank" class="block text-xs text-blue-500 dark:text-blue-400 hover:underline mt-1">
+          🔥 火山引擎 AI 服务 - 强大的AI视频生成能力
+        </a>
+      </div>
+    `;
+  } else {
+    // 其他工具不显示推广信息
+    promoContainer.innerHTML = '';
+  }
+  
+  // 显示模态框
+  document.getElementById('toolDetailModal').style.display = 'flex';
+}
+
+function closeToolDetail() {
+  document.getElementById('toolDetailModal').style.display = 'none';
+}
+
+function toggleFavFromDetail() {
+  toggleFav(currentToolName);
+  updateFavButton();
+}
+
+function updateFavButton() {
+  const favBtn = document.getElementById('toolDetailFavBtn');
+  const isFav = getFav().includes(currentToolName);
+  if (isFav) {
+    favBtn.innerHTML = '<i class="fa-solid fa-star text-yellow-400"></i> 已收藏';
+  } else {
+    favBtn.innerHTML = '<i class="fa-solid fa-star"></i> 收藏';
+  }
+}
+
+// 访问统计
+function visitCount(){
+  let c = parseInt(localStorage.getItem("visit")||0)+1;
+  localStorage.setItem("visit",c);
+  document.getElementById("count").textContent = c;
+}
+
+visitCount();
+render();
+</script>
+</body>
+</html>
