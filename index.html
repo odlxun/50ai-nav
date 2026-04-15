@@ -83,6 +83,7 @@ body {
 /* 工具卡片hover效果 */
 .tool-card {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 0;
 }
 
 .tool-card:hover {
@@ -208,8 +209,10 @@ body {
 <body class="gradient-bg text-[#1d1d1f] dark:text-white min-h-screen">
 
 <div class="flex min-h-screen">
+<!-- 移动端遮罩层 -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden" onclick="toggleSidebar()"></div>
 <!-- 侧边栏：专业导航 + 专属LOGO + 广告合作入口 -->
-<aside id="sidebar" class="w-[220px] fixed h-full bg-white/80 dark:bg-dark-100/80 backdrop-blur-xl border-r border-gray-200/50 dark:border-dark-300/50 z-50 transition-transform duration-300 transform md:translate-x-0 -translate-x-full md:relative relative">
+<aside id="sidebar" class="w-[280px] fixed h-full bg-white/95 dark:bg-dark-100/95 backdrop-blur-xl border-r border-gray-200/50 dark:border-dark-300/50 z-50 transition-transform duration-300 transform md:translate-x-0 -translate-x-full md:relative md:w-[220px]">
   <div class="p-5 border-b border-gray-200/50 dark:border-dark-300/50">
     <!-- 你的专属定制LOGO -->
     <div class="flex flex-col items-center text-center">
@@ -290,10 +293,13 @@ body {
   </div>
 </aside>
 
-<main class="flex-1 md:ml-[220px] pb-20 md:pb-0">
+<main class="flex-1 md:ml-[220px] pb-24 md:pb-0">
 <header class="sticky top-0 bg-white/80 dark:bg-dark-100/80 backdrop-blur-xl z-40 border-b border-gray-200/50 dark:border-dark-300/50">
   <div class="flex items-center justify-between px-4 py-3">
     <div class="md:hidden flex items-center gap-2">
+      <button onclick="toggleSidebar()" class="w-9 h-9 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 dark:from-dark-200 dark:to-dark-300 flex items-center justify-center shadow-sm hover:shadow-md transition-all">
+        <i class="fa-solid fa-bars text-gray-600 dark:text-gray-300"></i>
+      </button>
       <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-primary/20">50</div>
       <span class="font-semibold text-base bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">50AI导航</span>
     </div>
@@ -316,7 +322,7 @@ body {
   </div>
 </header>
 
-<div class="p-5">
+<div class="p-3 md:p-5">
   <!-- 网站域名展示 -->
   <div class="text-center mb-10 page-load">
     <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20 mb-4">
@@ -328,43 +334,43 @@ body {
   </div>
   
   <!-- 推广专区 -->
-  <div class="mb-10 animate-fade-in">
-    <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+  <div class="mb-6 sm:mb-10 animate-fade-in">
+    <h2 class="text-base sm:text-lg font-bold mb-3 sm:mb-4 flex items-center gap-2">
       <i class="fa-solid fa-bullhorn text-primary animate-pulse-soft"></i> 推荐服务
     </h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3 md:gap-4">
       <!-- 阿里云推广 -->
-      <a href="https://www.aliyun.com" target="_blank" class="tool-card glass-card rounded-2xl p-5 border border-blue-200/50 dark:border-blue-900/30 hover:border-blue-400/50 dark:hover:border-blue-700/50 relative cursor-pointer group">
-        <div class="absolute top-3 right-3">
-          <span class="px-2 py-1 text-xs bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full shadow-sm">推荐</span>
+      <a href="https://www.aliyun.com" target="_blank" rel="noopener" class="tool-card glass-card rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-blue-200/50 dark:border-blue-900/30 hover:border-blue-400/50 dark:hover:border-blue-700/50 relative cursor-pointer group">
+        <div class="absolute top-2 right-2 sm:top-3 sm:right-3">
+          <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full shadow-sm">推荐</span>
         </div>
-        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/30 group-hover:scale-110 transition-transform">
-          <img src="https://www.aliyun.com/favicon.ico?v=2" class="w-7 h-7 object-contain" alt="阿里云">
+        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/30 group-hover:scale-110 transition-transform">
+          <img src="https://www.aliyun.com/favicon.ico?v=2" class="w-6 h-6 sm:w-7 sm:h-7 object-contain" alt="阿里云">
         </div>
-        <h3 class="font-semibold text-sm mb-1">阿里云 AI 服务</h3>
-        <p class="text-xs text-gray-500 dark:text-gray-400">AI大模型服务 | 云服务器 | 人工智能平台</p>
+        <h3 class="font-semibold text-xs sm:text-sm mb-1">阿里云 AI 服务</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">AI大模型服务 | 云服务器 | 人工智能平台</p>
       </a>
       <!-- 火山引擎推广 -->
-      <a href="https://www.volcengine.com" target="_blank" class="tool-card glass-card rounded-2xl p-5 border border-orange-200/50 dark:border-orange-900/30 hover:border-orange-400/50 dark:hover:border-orange-700/50 relative cursor-pointer group">
-        <div class="absolute top-3 right-3">
-          <span class="px-2 py-1 text-xs bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-full shadow-sm">推荐</span>
+      <a href="https://www.volcengine.com" target="_blank" rel="noopener" class="tool-card glass-card rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-orange-200/50 dark:border-orange-900/30 hover:border-orange-400/50 dark:hover:border-orange-700/50 relative cursor-pointer group">
+        <div class="absolute top-2 right-2 sm:top-3 sm:right-3">
+          <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-full shadow-sm">推荐</span>
         </div>
-        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/30 group-hover:scale-110 transition-transform">
-          <img src="https://www.volcengine.com/favicon.ico" class="w-7 h-7 object-contain" alt="火山引擎">
+        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/30 group-hover:scale-110 transition-transform">
+          <img src="https://www.volcengine.com/favicon.ico" class="w-6 h-6 sm:w-7 sm:h-7 object-contain" alt="火山引擎">
         </div>
-        <h3 class="font-semibold text-sm mb-1">火山引擎 AI 服务</h3>
-        <p class="text-xs text-gray-500 dark:text-gray-400">AI大模型服务 | 智能视频 | 数据分析</p>
+        <h3 class="font-semibold text-xs sm:text-sm mb-1">火山引擎 AI 服务</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">AI大模型服务 | 智能视频 | 数据分析</p>
       </a>
       <!-- TOKEN代理项目推广 -->
-      <a href="https://www.example.com" target="_blank" class="tool-card glass-card rounded-2xl p-5 border border-purple-200/50 dark:border-purple-900/30 hover:border-purple-400/50 dark:hover:border-purple-700/50 relative cursor-pointer group">
-        <div class="absolute top-3 right-3">
-          <span class="px-2 py-1 text-xs bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full shadow-sm">推荐</span>
+      <a href="https://www.example.com" target="_blank" rel="noopener" class="tool-card glass-card rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-purple-200/50 dark:border-purple-900/30 hover:border-purple-400/50 dark:hover:border-purple-700/50 relative cursor-pointer group hidden sm:block">
+        <div class="absolute top-2 right-2 sm:top-3 sm:right-3">
+          <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full shadow-sm">推荐</span>
         </div>
-        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/30 group-hover:scale-110 transition-transform">
-          <i class="fa-solid fa-link text-purple-500 text-xl"></i>
+        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/30 group-hover:scale-110 transition-transform">
+          <i class="fa-solid fa-link text-purple-500 text-lg sm:text-xl"></i>
         </div>
-        <h3 class="font-semibold text-sm mb-1">TOKEN代理项目</h3>
-        <p class="text-xs text-gray-500 dark:text-gray-400">AI服务代理 | 优惠Token | 专业技术支持</p>
+        <h3 class="font-semibold text-xs sm:text-sm mb-1">TOKEN代理项目</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">AI服务代理 | 优惠Token | 专业技术支持</p>
       </a>
     </div>
   </div>
@@ -374,7 +380,7 @@ body {
     <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
       <i class="fa-brands fa-weixin text-green-500"></i> AI干货精选
     </h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
       <a href="https://mp.weixin.qq.com/你的公众号" target="_blank" class="bg-white dark:bg-[#1a1a1c] rounded-xl overflow-hidden border border-gray-200 dark:border-[#27272a] hover:shadow-md transition-all">
         <img src="https://picsum.photos/400/200?aig" class="w-full h-32 object-cover">
         <div class="p-4">
@@ -392,8 +398,8 @@ body {
     </div>
   </div>
 
-  <!-- 工具列表：全官方LOGO + 无痕推广 -->
-<div id="list" class="tool-grid grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+  <!-- 工具列表：移动端两列，桌面端多列网格 -->
+<div id="list" class="tool-grid grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 md:gap-4 px-1">
 </div>
 </div>
 
@@ -405,10 +411,10 @@ body {
   <div class="mt-4 mb-5">
     <div class="text-2xl font-black bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">50c.cn</div>
   </div>
-  <p class="text-gray-600 dark:text-gray-300">© 2025 50AI导航 | 全网最全AI工具导航</p>
-  <p class="mt-2 flex items-center justify-center gap-4">
-    <span class="flex items-center gap-1"><i class="fa-solid fa-mobile-screen text-primary/50"></i> 公众号：50AI导航</span>
-    <span class="flex items-center gap-1"><i class="fa-solid fa-handshake text-accent/50"></i> 广告合作：联系公众号</span>
+  <p class="text-gray-600 dark:text-gray-300">© 2026 50AI导航 | 全网最全AI工具导航</p>
+  <p class="mt-2 flex items-center justify-center gap-4 flex-wrap">
+    <span class="flex items-center gap-1"><i class="fa-solid fa-mobile-screen text-primary/50"></i> 公众号：老勋说</span>
+    <span class="flex items-center gap-1"><i class="fa-solid fa-handshake text-accent/50"></i> 广告合作：4458770</span>
   </p>
   <p class="mt-3 text-primary font-medium flex items-center justify-center gap-1">
     <i class="fa-solid fa-sparkles"></i>
@@ -1349,8 +1355,18 @@ let favMode = false;
 // 收藏功能
 function getFav(){ return JSON.parse(localStorage.getItem("fav")||"[]"); }
 function toggleFav(n){ let f=getFav(); let i=f.indexOf(n); i==-1?f.push(n):f.splice(i,1); localStorage.setItem("fav",JSON.stringify(f)); render(); }
-function filter(c,t){cat=c;tag=t;favMode=false;render();updateMobileNav();}
-function showFav(){favMode=true;render();updateMobileNav();}
+function filter(c,t){cat=c;tag=t;favMode=false;render();updateMobileNav();closeSidebarOnMobile();}
+function showFav(){favMode=true;render();updateMobileNav();closeSidebarOnMobile();}
+
+// 移动端点击分类后关闭侧边栏
+function closeSidebarOnMobile() {
+  if (window.innerWidth < 768) {
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("sidebar-overlay");
+    sidebar.classList.add("-translate-x-full");
+    overlay.classList.add("hidden");
+  }
+}
 
 // 更新移动端底部导航栏高亮状态
 function updateMobileNav() {
@@ -1388,7 +1404,7 @@ function escapeAttr(str) {
   return str.replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-// 渲染工具：全官方LOGO，纯专业导航
+// 渲染工具：移动端两列网格，桌面端多列网格
 function render(){
   const s = document.getElementById("search").value.toLowerCase();
   let list = favMode ? tools.filter(i=>getFav().includes(i.name)) : tools.filter(i=>{
@@ -1400,18 +1416,17 @@ function render(){
     const safeName = escapeAttr(i.name);
     const safeUrl = escapeAttr(i.u);
     return `
-  <a href="${safeUrl}" target="_blank" class="tool-card glass-card rounded-2xl p-5 border border-gray-200/50 dark:border-dark-300/50 relative cursor-pointer group block" style="--index: ${index}">
-    <button onclick="toggleFav('${safeName}');event.preventDefault();event.stopPropagation()" class="absolute top-3 right-3 text-gray-300/50 hover:text-yellow-400 transition-colors ${getFav().includes(i.name)?'text-yellow-400':''}">
-      <i class="fa-solid fa-star"></i>
+  <a href="${safeUrl}" target="_blank" rel="noopener" class="tool-card glass-card rounded-xl p-3 md:p-4 border border-gray-200/50 dark:border-dark-300/50 relative cursor-pointer group block" style="--index: ${index}">
+    <button onclick="toggleFav('${safeName}');event.preventDefault();event.stopPropagation()" class="absolute top-1.5 right-1.5 md:top-2 md:right-2 text-gray-300/50 hover:text-yellow-400 transition-colors ${getFav().includes(i.name)?'text-yellow-400':''}">
+      <i class="fa-solid fa-star text-xs md:text-sm"></i>
     </button>
-    <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-dark-200 dark:to-dark-300 group-hover:scale-110 transition-transform shadow-sm">
-      <img src="${getToolLogo(i.name, i.u)}" class="w-7 h-7 object-contain" alt="${safeName}" data-tool-url="${i.u}">
+    <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl flex items-center justify-center mb-2 md:mb-3 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-dark-200 dark:to-dark-300 group-hover:scale-105 transition-transform shadow-sm mx-auto">
+      <img src="${getToolLogo(i.name, i.u)}" class="w-6 h-6 md:w-7 md:h-7 object-contain" alt="${safeName}" data-tool-url="${i.u}">
     </div>
-    <h3 class="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">${i.name}</h3>
-    <div class="flex gap-1.5 flex-wrap">
-      ${i.hot?'<span class="px-2 py-0.5 text-xs bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-full">热门</span>':''}
-      ${i.cn?'<span class="px-2 py-0.5 text-xs bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-full">国内</span>':''}
-      <span class="px-2 py-0.5 text-xs bg-gray-100 dark:bg-dark-200 text-gray-500 dark:text-gray-400 rounded-full">${categoryMap[i.c] || 'AI工具'}</span>
+    <h3 class="font-semibold text-xs md:text-sm text-center group-hover:text-primary transition-colors line-clamp-1 mb-1">${i.name}</h3>
+    <div class="flex gap-1 justify-center flex-wrap">
+      ${i.hot?'<span class="px-1 py-0.5 text-[10px] md:text-xs bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-full">热门</span>':''}
+      ${i.cn?'<span class="px-1 py-0.5 text-[10px] md:text-xs bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-full">国内</span>':''}
     </div>
   </a>`;
   }).join('');
@@ -1426,10 +1441,13 @@ function closeSubmit(){document.getElementById("modal").style.display="none";}
 function submitTool(){alert("提交成功！站长审核后将上线");closeSubmit();}
 function toggleSidebar(){
   const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("sidebar-overlay");
   if (sidebar.classList.contains("-translate-x-full")) {
     sidebar.classList.remove("-translate-x-full");
+    overlay.classList.remove("hidden");
   } else {
     sidebar.classList.add("-translate-x-full");
+    overlay.classList.add("hidden");
   }
 }
 
